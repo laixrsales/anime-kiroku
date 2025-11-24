@@ -2,6 +2,9 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Button, HStack } from '@chakra-ui/react'
+import i18n from './i18n'
+import { ThemeToggle } from './components/ThemeToggle'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +31,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <HStack spacing={4}>
+        <Button onClick={() => i18n.changeLanguage('pt')}>🇧🇷 PT</Button>
+        <Button onClick={() => i18n.changeLanguage('en')}>🇺🇸 EN</Button>
+      </HStack>
+      <ThemeToggle />
     </>
   )
 }
