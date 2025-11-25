@@ -20,7 +20,8 @@ export const colors = {
   background: {
     light: '#F6EEE2',
     default: '#F6EEE2',
-    dark: '#2A1F1A',
+    dark: '#242424',
+    //dark: '#2A1F1A',
   },
 
   text: {
