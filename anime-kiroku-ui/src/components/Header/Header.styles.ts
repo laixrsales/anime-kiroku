@@ -2,6 +2,7 @@
 import styled from '@emotion/styled'
 
 export const HeaderWrapper = styled.header`
+  background-color: var(--chakra-colors-background-default);
   position: fixed;
   top: 0;
   left: 0;
@@ -14,7 +15,6 @@ export const HeaderWrapper = styled.header`
   justify-content: space-between;
 
   backdrop-filter: blur(var(--chakra-space-sm));
-  border-bottom: 1px solid var(--chakra-colors-neutral-default);
   z-index: 1000;
 
   .menu-items {
