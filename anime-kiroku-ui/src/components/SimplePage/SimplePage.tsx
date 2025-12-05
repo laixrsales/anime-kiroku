@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Text, VStack } from '@chakra-ui/react'
 import {
   BackgroundWrapper,
