@@ -7,4 +7,5 @@ export interface HeaderItem {
 export interface HeaderProps {
   items: HeaderItem[]
   showLogo?: boolean
+  showUserInfo?: boolean
 }

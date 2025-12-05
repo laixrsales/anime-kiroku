@@ -21,7 +21,7 @@ import {
   ActionsArea,
 } from './Header.styles'
 
-export default function Header({ items, showLogo }: HeaderProps) {
+export default function Header({ items, showLogo, showUserInfo }: HeaderProps) {
   return (
     <HeaderWrapper>
       <MenuContainer>
@@ -83,22 +83,26 @@ export default function Header({ items, showLogo }: HeaderProps) {
           icon={<FiSearch />}
           variant="ghost"
         />
-        <IconButton
-          aria-label="Favoritos"
-          icon={<FiBookmark />}
-          variant="ghost"
-        />
+        {showUserInfo && (
+          <>
+            <IconButton
+              aria-label="Favoritos"
+              icon={<FiBookmark />}
+              variant="ghost"
+            />
 
-        <Menu>
-          <MenuButton>
-            <Avatar size="sm" src="/avatar.png" />
-          </MenuButton>
-          <MenuList className="menu-items">
-            <MenuItem className="menu-items">Perfil</MenuItem>
-            <MenuItem className="menu-items">Configurações</MenuItem>
-            <MenuItem className="menu-items">Sair</MenuItem>
-          </MenuList>
-        </Menu>
+            <Menu>
+              <MenuButton>
+                <Avatar size="sm" src="/avatar.png" />
+              </MenuButton>
+              <MenuList className="menu-items">
+                <MenuItem className="menu-items">Perfil</MenuItem>
+                <MenuItem className="menu-items">Configurações</MenuItem>
+                <MenuItem className="menu-items">Sair</MenuItem>
+              </MenuList>
+            </Menu>
+          </>
+        )}
       </ActionsArea>
     </HeaderWrapper>
   )
