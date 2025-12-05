@@ -53,7 +53,6 @@ export const BannerImage = styled.img<{ fadeIntensity: number }>`
   object-position: center;
   display: block;
 
-  /* Efeito de fade nas bordas usando máscara gradiente */
   mask-image:
     radial-gradient(
       ellipse at center,
@@ -143,7 +142,6 @@ export const Subtitle = styled(Text)`
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 `
 
-// Função auxiliar para converter cor hex para RGB
 const parseColorToRGB = (color: string): string => {
   if (color.startsWith('#')) {
     const r = parseInt(color.slice(1, 3), 16)

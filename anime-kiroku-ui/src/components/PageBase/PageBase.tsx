@@ -8,7 +8,6 @@ import {
 } from './PageBase.styles'
 import type { PageBaseProps } from './PageBase.types'
 
-// Itens do menu para LANDING PAGE (usuário não logado)
 const landingHeaderItems = [
   { label: 'Animes', href: '/animes' },
   { label: 'Listas', href: '/listas' },
@@ -16,7 +15,6 @@ const landingHeaderItems = [
   { label: 'Criar Conta', href: '/criar-conta' },
 ]
 
-// Itens do menu para páginas AUTENTICADAS (usuário logado)
 const authenticatedHeaderItems = [
   { label: 'Feed', href: '/feed' },
   { label: 'Animes', href: '/animes' },
@@ -43,18 +41,8 @@ const authenticatedHeaderItems = [
       { label: 'Josei', href: '/generos/josei' },
     ],
   },
-  {
-    label: 'Mais',
-    children: [
-      { label: 'Calendário', href: '/calendario' },
-      { label: 'Notícias', href: '/noticias' },
-      { label: 'Comunidade', href: '/comunidade' },
-      { label: 'Sobre', href: '/sobre' },
-    ],
-  },
 ]
 
-// Componente de loading padrão
 const DefaultLoadingSpinner = () => (
   <LoadingOverlay data-testid="loading-overlay">
     <LoadingSpinner data-testid="loading-spinner" />
@@ -71,7 +59,6 @@ export default function PageBase({
   isLoading = false,
   loadingComponent,
 }: PageBaseProps) {
-  // Determinar os itens do header
   const getHeaderItems = () => {
     if (customHeaderItems) return customHeaderItems
 
@@ -80,10 +67,8 @@ export default function PageBase({
       : authenticatedHeaderItems
   }
 
-  // Determinar se mostra informações do usuário
   const shouldShowUserInfo = pageType === 'authenticated' && showUserInfo
 
-  // Se está carregando, mostrar loading
   if (isLoading) {
     return loadingComponent || <DefaultLoadingSpinner />
   }

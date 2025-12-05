@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { Box, Text, IconButton } from '@chakra-ui/react'
 import type { CardSize } from './AnimeCard.types'
 
-// Tamanhos base para o card
 const sizeMap: Record<CardSize, { width: string; height: string }> = {
   sm: { width: '160px', height: '240px' },
   md: { width: '200px', height: '300px' },

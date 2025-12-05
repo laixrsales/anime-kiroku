@@ -82,7 +82,6 @@ describe('Banner', () => {
 
     const image = screen.getByTestId('banner-image')
     expect(image).toBeInTheDocument()
-    // Note: O fadeIntensity é aplicado via CSS, então verificamos se o elemento existe com a prop
   })
 
   it('renders overlay when hasOverlay is true', () => {
@@ -102,7 +101,6 @@ describe('Banner', () => {
     render(<Banner {...mockProps} hasOverlay={false} />)
 
     const overlay = screen.getByTestId('banner-overlay')
-    // O overlay ainda é renderizado, mas com background transparente
     expect(overlay).toBeInTheDocument()
   })
 

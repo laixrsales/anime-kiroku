@@ -33,8 +33,6 @@ export default function AnimeCard({
   className,
 }: AnimeCardProps) {
   const handleCardClick = () => {
-    // Aqui você implementaria a navegação para detalhes do anime
-    // Por exemplo: navigate(`/anime/${id}`)
     console.log(`Navigate to anime details: ${id}`)
   }
 

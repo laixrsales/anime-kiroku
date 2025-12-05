@@ -35,7 +35,6 @@ export const Slide = styled(Box)`
   align-items: flex-start;
 `
 
-// CORREÇÃO: Remover a prop position e usar classes CSS
 export const ControlButton = styled(IconButton)`
   position: absolute;
   top: 50%;
@@ -68,7 +67,6 @@ export const ControlButton = styled(IconButton)`
   }
 `
 
-// Adicionar classes específicas para posição
 export const PrevButton = styled(ControlButton)`
   left: -20px;
 `

@@ -37,11 +37,9 @@ export default function CardCarousel({
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
   const slidesContainerRef = useRef<HTMLDivElement>(null)
 
-  // CORREÇÃO: Calcular slideWidth diretamente sem useEffect
   const slideWidth = useMemo(() => {
     if (slidesPerView <= 0) return '100%'
     const widthPercentage = 100 / slidesPerView
-    // Ajustar para considerar o espaçamento
     return `calc(${widthPercentage}% - ${(spacing * (slidesPerView - 1)) / slidesPerView}px)`
   }, [slidesPerView, spacing])
 
@@ -72,7 +70,6 @@ export default function CardCarousel({
     }
   }
 
-  // Auto-play
   useEffect(() => {
     if (!isPlaying || totalSlides <= 1) return
 
@@ -91,7 +88,6 @@ export default function CardCarousel({
     }
   }, [currentIndex, isPlaying, totalSlides, autoPlayInterval, goToNext])
 
-  // Função para renderizar slides
   const renderSlides = () => {
     if (cards.length === 0) {
       return (
@@ -105,7 +101,6 @@ export default function CardCarousel({
       )
     }
 
-    // Agrupar cards em slides baseado em slidesPerView
     const groupedCards = []
     for (let i = 0; i < cards.length; i += slidesPerView) {
       groupedCards.push(cards.slice(i, i + slidesPerView))

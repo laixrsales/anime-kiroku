@@ -46,7 +46,6 @@ describe('AnimeCard', () => {
   it('displays seasons and episodes in overlay', () => {
     render(<AnimeCard {...mockProps} />)
 
-    // Simular hover para mostrar overlay
     const card = screen.getByTestId('anime-card')
     fireEvent.mouseEnter(card)
 
@@ -108,9 +107,7 @@ describe('AnimeCard', () => {
     const addButton = screen.getByTestId('add-button')
     fireEvent.click(addButton)
 
-    // Verifica que onAdd foi chamado
     expect(mockOnAdd).toHaveBeenCalled()
-    // Verifica que o clique no card não foi acionado (não há console.log adicional)
     expect(consoleSpy).not.toHaveBeenCalledWith(
       `Navigate to anime details: ${mockProps.id}`,
     )

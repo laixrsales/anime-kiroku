@@ -96,18 +96,15 @@ describe('CardCarousel', () => {
     const nextButton = screen.getByTestId('next-button')
     fireEvent.click(nextButton)
 
-    // O carrossel deve ter navegado para o próximo slide
     expect(screen.getByTestId('carousel-wrapper')).toBeInTheDocument()
   })
 
   it('navigates to previous slide when prev button is clicked', () => {
     render(<CardCarousel cards={mockCards} slidesPerView={2} />)
 
-    // Primeiro vai para o próximo slide
     const nextButton = screen.getByTestId('next-button')
     fireEvent.click(nextButton)
 
-    // Depois volta
     const prevButton = screen.getByTestId('prev-button')
     fireEvent.click(prevButton)
 
@@ -130,7 +127,6 @@ describe('CardCarousel', () => {
     )
 
     expect(screen.getByTestId('indicators-container')).toBeInTheDocument()
-    // Deve ter 3 indicadores para 6 cards com 2 por slide
     expect(screen.getAllByTestId(/indicator-\d+/)).toHaveLength(3)
   })
 
@@ -144,10 +140,8 @@ describe('CardCarousel', () => {
       />,
     )
 
-    // Avançar o tempo
     vi.advanceTimersByTime(1500)
 
-    // O slide deve ter avançado automaticamente
     expect(screen.getByTestId('carousel-wrapper')).toBeInTheDocument()
   })
 
@@ -163,11 +157,9 @@ describe('CardCarousel', () => {
 
     const carousel = screen.getByTestId('card-carousel')
 
-    // Mouse enter pausa
     fireEvent.mouseEnter(carousel)
     vi.advanceTimersByTime(1500)
 
-    // Mouse leave retoma
     fireEvent.mouseLeave(carousel)
     vi.advanceTimersByTime(1500)
 
@@ -197,7 +189,6 @@ describe('CardCarousel', () => {
   it('handles window resize', () => {
     render(<CardCarousel cards={mockCards} slidesPerView={4} />)
 
-    // Simular resize da janela
     window.dispatchEvent(new Event('resize'))
 
     expect(screen.getByTestId('carousel-wrapper')).toBeInTheDocument()

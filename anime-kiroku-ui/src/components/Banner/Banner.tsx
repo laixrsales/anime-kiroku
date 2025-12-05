@@ -28,7 +28,6 @@ export default function Banner({
     }
   }
 
-  // Converter altura para string se for número
   const heightValue = typeof height === 'number' ? `${height}px` : height
 
   return (
