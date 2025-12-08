@@ -1,19 +1,28 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   FormControl,
   FormLabel,
   FormErrorMessage,
   VStack,
+  useToast,
+  Box,
+  Text,
 } from '@chakra-ui/react'
 
 import SimplePage from '../../components/SimplePage/SimplePage'
 import { StyledInput } from '../../components/SimplePage/SimplePage.styles'
+import { useNavigation } from '../../hooks/useNavigation'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function ResetPasswordPage() {
+  const navigation = useNavigation()
+  const { resetPassword, isLoading } = useAuth()
+  const toast = useToast()
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-  function validate() {
+  const validate = useCallback(() => {
     if (!email.includes('@')) {
       setError('Invalid email')
       return false
@@ -21,12 +30,55 @@ export default function ResetPasswordPage() {
 
     setError('')
     return true
-  }
+  }, [email])
 
-  function handleSubmit() {
+  const handleSubmit = useCallback(async () => {
     if (!validate()) return
 
-    console.log('Reset link enviado! Pronto para chamar API...')
+    try {
+      await resetPassword(email)
+      setIsSubmitted(true)
+
+      toast({
+        title: 'Success',
+        description: 'An email has been sent to your inbox!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: `It was not possible to send you the email: ${error}`,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }, [email, resetPassword, toast, validate])
+
+  const handleBackToLogin = useCallback(() => {
+    navigation.goToLogin()
+  }, [navigation])
+
+  if (isSubmitted) {
+    return (
+      <SimplePage
+        title="E-mail sent!"
+        buttonTitle="Back to login"
+        description="Verify your inbox and follow the instructions. The link will expire in 1 hour."
+        onClick={handleBackToLogin}
+      >
+        <VStack spacing={6} width="100%" textAlign="center">
+          <Box>
+            <Text fontSize="md" color="gray.600">
+              We sent an e-mail to <strong>{email}</strong> and now you can
+              reset your password.
+            </Text>
+          </Box>
+        </VStack>
+      </SimplePage>
+    )
   }
 
   const field = (
@@ -37,6 +89,11 @@ export default function ResetPasswordPage() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSubmit()
+          }}
+          disabled={isLoading}
+          placeholder="seu@email.com"
         />
         <FormErrorMessage>{error}</FormErrorMessage>
       </FormControl>
@@ -46,8 +103,8 @@ export default function ResetPasswordPage() {
   return (
     <SimplePage
       title="Reset Password"
-      description="A link will be sent to your email address to reset your password."
-      buttonTitle="Send email"
+      description="A link will be sent to your email address to reset your password"
+      buttonTitle={isLoading ? 'Loading...' : 'Send e-mail '}
       onClick={handleSubmit}
     >
       {field}
