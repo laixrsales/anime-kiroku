@@ -8,4 +8,5 @@ export interface HeaderProps {
   items: HeaderItem[]
   showLogo?: boolean
   showUserInfo?: boolean
+  homeRedirect?: string
 }
