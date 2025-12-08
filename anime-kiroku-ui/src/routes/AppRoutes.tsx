@@ -13,6 +13,7 @@ const ResetPasswordPage = lazy(
   () => import('../pages/ResetPasswordPage/ResetPasswordPage'),
 )
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'))
+const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
 
 /*
 const DashboardPage = lazy(() => import('../pages/DashboardPage/DashboardPage'))
@@ -131,19 +132,7 @@ export default function AppRoutes() {
           path="/home"
           element={<Navigate to={ROUTES.LANDING} replace />}
         />
-        <Route
-          path="/entrar"
-          element={<Navigate to={ROUTES.LOGIN} replace />}
-        />
-        <Route
-          path="/criar-conta"
-          element={<Navigate to={ROUTES.REGISTER} replace />}
-        />
-        <Route
-          path="/anime"
-          element={<Navigate to={ROUTES.ANIME_LIST} replace />}
-        />
-
+        <Route path={ROUTES.SEARCH} element={<SearchPage />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
     </Suspense>
