@@ -15,7 +15,6 @@ export default function Banner({
   subtitle,
   height = '60vh',
   fadeIntensity = 0.7,
-  contentPosition = 'center',
   hasOverlay = false,
   overlayColor = 'var(--chakra-colors-background-dark)',
   overlayOpacity = 0.3,
@@ -54,10 +53,7 @@ export default function Banner({
       />
 
       {(title || subtitle) && (
-        <ContentWrapper
-          contentPosition={contentPosition}
-          data-testid="banner-content"
-        >
+        <ContentWrapper data-testid="banner-content">
           {title && <Title data-testid="banner-title">{title}</Title>}
           {subtitle && (
             <Subtitle data-testid="banner-subtitle">{subtitle}</Subtitle>

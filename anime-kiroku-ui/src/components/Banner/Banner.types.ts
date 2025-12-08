@@ -5,14 +5,9 @@ export interface BannerProps {
   subtitle?: string
   height?: string | number
   fadeIntensity?: number
-  contentPosition?: 'left' | 'center' | 'right'
   hasOverlay?: boolean
   overlayColor?: string
   overlayOpacity?: number
   className?: string
   onClick?: () => void
-}
-
-export interface BannerContentWrapperProps {
-  contentPosition: 'left' | 'center' | 'right'
 }

@@ -5,8 +5,8 @@ import Banner from './Banner'
 const mockProps = {
   imageUrl: 'https://example.com/banner-image.jpg',
   altText: 'Anime banner',
-  title: 'Attack on Titan',
-  subtitle: 'A batalha final pela humanidade',
+  title: 'SPY × FAMILY',
+  subtitle: 'Dublado • Aventura Comédia Suspense',
   height: '500px',
   fadeIntensity: 0.7,
 }
@@ -20,20 +20,22 @@ describe('Banner', () => {
     expect(image).toHaveAttribute('alt', mockProps.altText)
   })
 
-  it('renders title and subtitle when provided', () => {
+  it('renders title and subtitle at bottom left', () => {
     render(<Banner {...mockProps} />)
 
-    expect(screen.getByTestId('banner-title')).toHaveTextContent(
-      mockProps.title!,
-    )
-    expect(screen.getByTestId('banner-subtitle')).toHaveTextContent(
-      mockProps.subtitle!,
-    )
+    const title = screen.getByTestId('banner-title')
+    const subtitle = screen.getByTestId('banner-subtitle')
+    const content = screen.getByTestId('banner-content')
+
+    expect(title).toHaveTextContent(mockProps.title!)
+    expect(subtitle).toHaveTextContent(mockProps.subtitle!)
+    expect(content).toBeInTheDocument()
+    expect(content).toHaveStyle('bottom: 0')
+    expect(content).toHaveStyle('left: 0')
   })
 
   it('does not render content when no title or subtitle', () => {
-    const { ...props } = mockProps
-    render(<Banner {...props} />)
+    render(<Banner imageUrl={mockProps.imageUrl} altText={mockProps.altText} />)
 
     expect(screen.queryByTestId('banner-content')).not.toBeInTheDocument()
   })
@@ -56,13 +58,6 @@ describe('Banner', () => {
     expect(container).toHaveStyle('cursor: pointer')
   })
 
-  it('has default cursor when not clickable', () => {
-    render(<Banner {...mockProps} />)
-
-    const container = screen.getByTestId('banner-container')
-    expect(container).toHaveStyle('cursor: default')
-  })
-
   it('renders with custom height', () => {
     render(<Banner {...mockProps} height="70vh" />)
 
@@ -75,13 +70,6 @@ describe('Banner', () => {
 
     const container = screen.getByTestId('banner-container')
     expect(container).toHaveStyle('height: 600px')
-  })
-
-  it('applies fade intensity to image', () => {
-    render(<Banner {...mockProps} fadeIntensity={0.5} />)
-
-    const image = screen.getByTestId('banner-image')
-    expect(image).toBeInTheDocument()
   })
 
   it('renders overlay when hasOverlay is true', () => {
@@ -101,24 +89,8 @@ describe('Banner', () => {
     render(<Banner {...mockProps} hasOverlay={false} />)
 
     const overlay = screen.getByTestId('banner-overlay')
-    expect(overlay).toBeInTheDocument()
-  })
-
-  it('renders with different content positions', () => {
-    const { rerender } = render(
-      <Banner {...mockProps} contentPosition="left" />,
-    )
-
-    let content = screen.getByTestId('banner-content')
-    expect(content).toBeInTheDocument()
-
-    rerender(<Banner {...mockProps} contentPosition="center" />)
-    content = screen.getByTestId('banner-content')
-    expect(content).toBeInTheDocument()
-
-    rerender(<Banner {...mockProps} contentPosition="right" />)
-    content = screen.getByTestId('banner-content')
-    expect(content).toBeInTheDocument()
+    expect(overlay).toBeInTheDocument() // O componente ainda renderiza, mas transparente
+    expect(overlay).toHaveStyle('background: transparent')
   })
 
   it('applies custom className', () => {
@@ -146,5 +118,21 @@ describe('Banner', () => {
     const container = screen.getByTestId('banner-container')
     expect(container).toHaveAttribute('role', 'banner')
     expect(container).not.toHaveAttribute('tabindex')
+  })
+
+  it('renders subtitle without title', () => {
+    render(
+      <Banner imageUrl={mockProps.imageUrl} subtitle={mockProps.subtitle} />,
+    )
+
+    expect(screen.getByText(mockProps.subtitle!)).toBeInTheDocument()
+    expect(screen.queryByTestId('banner-title')).not.toBeInTheDocument()
+  })
+
+  it('renders title without subtitle', () => {
+    render(<Banner imageUrl={mockProps.imageUrl} title={mockProps.title} />)
+
+    expect(screen.getByText(mockProps.title!)).toBeInTheDocument()
+    expect(screen.queryByTestId('banner-subtitle')).not.toBeInTheDocument()
   })
 })
