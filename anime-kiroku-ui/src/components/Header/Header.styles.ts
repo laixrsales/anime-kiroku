@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Text } from '@chakra-ui/react'
+import { Text, IconButton } from '@chakra-ui/react'
 
 export const HeaderWrapper = styled.header`
   background-color: var(--chakra-colors-background-default);
@@ -17,6 +17,8 @@ export const HeaderWrapper = styled.header`
   backdrop-filter: blur(var(--chakra-space-sm));
   z-index: 1000;
   color: var(--chakra-colors-text-primary);
+  border-bottom: 1px solid;
+  border-color: var(--chakra-colors-neutral-light);
 
   .menu-items {
     background-color: var(--chakra-colors-background-light);
@@ -49,13 +51,13 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  gap: var(--chakra-space-xl);
 `
 
 export const NavArea = styled.nav`
   display: flex;
   align-items: center;
   gap: var(--chakra-space-lg);
-  margin-left: var(--chakra-space-xl);
   flex-grow: 1;
 `
 
@@ -65,6 +67,7 @@ export const NavItem = styled(Text)`
   border-radius: var(--chakra-radii-sm);
   transition: all 0.2s ease;
   color: var(--chakra-colors-text-primary);
+  font-weight: 500;
 
   &:hover {
     color: var(--chakra-colors-primary-default);
@@ -77,17 +80,23 @@ export const NavItem = styled(Text)`
 `
 
 export const DropdownTrigger = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--chakra-space-xs);
-  padding: var(--chakra-space-xs) var(--chakra-space-sm);
-  border-radius: var(--chakra-radii-sm);
   cursor: pointer;
   color: var(--chakra-colors-text-primary);
   transition: all 0.2s ease;
+  font-weight: 500;
 
   &:hover {
     color: var(--chakra-colors-primary-default);
+  }
+`
+
+export const DropdownContent = styled.div`
+  display: flex;
+  align-items: center;
+  padding: var(--chakra-space-xs) var(--chakra-space-sm);
+  border-radius: var(--chakra-radii-sm);
+
+  &:hover {
     background-color: var(--chakra-colors-background-light);
   }
 `
@@ -97,4 +106,12 @@ export const ActionsArea = styled.div`
   align-items: center;
   gap: var(--chakra-space-md);
   flex-shrink: 0;
+`
+
+export const UserIconButton = styled(IconButton)`
+  color: var(--chakra-colors-text-primary);
+
+  &:hover {
+    color: var(--chakra-colors-primary-default);
+  }
 `

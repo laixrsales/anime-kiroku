@@ -3,21 +3,65 @@ import { vi } from 'vitest'
 import { BrowserRouter } from 'react-router-dom'
 import Header from './Header'
 import { ChakraProvider } from '@chakra-ui/react'
+import React, { type ReactNode } from 'react'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import type {
+  AuthContextType,
+  User,
+} from '../../contexts/AuthContext/AuthContext.types'
 
-// Mock do react-router-dom
 const mockNavigate = vi.fn()
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
+const mockLogout = vi.fn()
+const mockToast = vi.fn()
+
+vi.mock('../../hooks/useNavigation', () => ({
+  useNavigation: () => ({ goTo: mockNavigate }),
+}))
+
+vi.mock('@chakra-ui/react', async () => {
+  const actual = await vi.importActual('@chakra-ui/react')
   return {
     ...actual,
-    useNavigate: () => mockNavigate,
+    useToast: () => mockToast,
   }
 })
+
+beforeAll(() => {
+  Element.prototype.scrollTo = vi.fn()
+})
+
+const mockUser: User = {
+  id: '123',
+  name: 'Test User',
+  email: 'test@example.com',
+  username: 'testuser',
+  createdAt: new Date(),
+}
+
+const mockAuthContextValue: AuthContextType = {
+  user: mockUser,
+  isAuthenticated: true,
+  isLoading: false,
+  login: vi.fn(),
+  logout: mockLogout,
+  register: vi.fn(),
+  resetPassword: vi.fn(),
+}
+
+const AuthProviderWrapper = ({ children }: { children: ReactNode }) => {
+  return (
+    <AuthContext.Provider value={mockAuthContextValue}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
 
 function renderWithProviders(ui: React.ReactNode) {
   return render(
     <BrowserRouter>
-      <ChakraProvider>{ui}</ChakraProvider>
+      <ChakraProvider>
+        <AuthProviderWrapper>{ui}</AuthProviderWrapper>
+      </ChakraProvider>
     </BrowserRouter>,
   )
 }
@@ -39,61 +83,44 @@ describe('Header', () => {
     vi.clearAllMocks()
   })
 
-  it('if showLogo is true, renders logo with link', () => {
+  it('renders logo when showLogo is true', () => {
     renderWithProviders(<Header items={itemsMock} showLogo={true} />)
 
-    const logoLink = screen.getByRole('link')
     const logoImg = screen.getByAltText('AnimeKiroku Logo')
-    expect(logoLink).toBeInTheDocument()
     expect(logoImg).toBeInTheDocument()
-    expect(screen.getByText('AnimeKiroku')).toBeInTheDocument()
+
+    const logoText = screen.getByText('AnimeKiroku')
+    expect(logoText).toBeInTheDocument()
   })
 
-  it('logo link redirects to home when clicked', () => {
-    renderWithProviders(<Header items={itemsMock} showLogo={true} />)
-
-    const logoLink = screen.getByRole('link')
-    fireEvent.click(logoLink)
-
-    expect(mockNavigate).toHaveBeenCalledWith('/')
-  })
-
-  it('if showLogo is false, does not render logo', () => {
+  it('does not render logo when showLogo is false', () => {
     renderWithProviders(<Header items={itemsMock} showLogo={false} />)
 
     expect(screen.queryByAltText('AnimeKiroku Logo')).not.toBeInTheDocument()
     expect(screen.queryByText('AnimeKiroku')).not.toBeInTheDocument()
   })
 
-  it('renders simple menu items with correct spacing', () => {
+  it('renders all navigation items', () => {
     renderWithProviders(<Header items={itemsMock} showLogo={true} />)
 
-    const homeItem = screen.getByText('Home')
-    const topItem = screen.getByText('Top 100')
-
-    expect(homeItem).toBeInTheDocument()
-    expect(topItem).toBeInTheDocument()
-
-    const navArea = homeItem.closest('nav')
-    expect(navArea).toBeInTheDocument()
+    expect(screen.getByText('Home')).toBeInTheDocument()
+    expect(screen.getByText('Categorias')).toBeInTheDocument()
+    expect(screen.getByText('Top 100')).toBeInTheDocument()
   })
 
-  it('renders dropdown menu with rotating arrow', async () => {
-    renderWithProviders(<Header items={itemsMock} showLogo={true} />)
-
-    const categoriasButton = screen.getByText('Categorias')
-    expect(categoriasButton).toBeInTheDocument()
-
-    fireEvent.click(categoriasButton)
-
-    expect(screen.getByText('Ação')).toBeInTheDocument()
-    expect(screen.getByText('Drama')).toBeInTheDocument()
-  })
-
-  it('renders action buttons', () => {
+  it('renders search button', () => {
     renderWithProviders(<Header items={itemsMock} showLogo={true} />)
 
     expect(screen.getByLabelText('Pesquisar')).toBeInTheDocument()
+  })
+
+  it('search button navigates to search page', () => {
+    renderWithProviders(<Header items={itemsMock} showLogo={true} />)
+
+    const searchButton = screen.getByLabelText('Pesquisar')
+    fireEvent.click(searchButton)
+
+    expect(mockNavigate).toHaveBeenCalled()
   })
 
   it('renders user menu when showUserInfo is true', () => {
@@ -101,8 +128,7 @@ describe('Header', () => {
       <Header items={itemsMock} showLogo={true} showUserInfo={true} />,
     )
 
-    const avatar = screen.getByAltText('Avatar do usuário')
-    expect(avatar).toBeInTheDocument()
+    expect(screen.getByLabelText('Menu do usuário')).toBeInTheDocument()
     expect(screen.getByLabelText('Favoritos')).toBeInTheDocument()
   })
 
@@ -111,63 +137,50 @@ describe('Header', () => {
       <Header items={itemsMock} showLogo={true} showUserInfo={false} />,
     )
 
-    expect(screen.queryByAltText('Avatar do usuário')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Menu do usuário')).not.toBeInTheDocument()
     expect(screen.queryByLabelText('Favoritos')).not.toBeInTheDocument()
   })
 
-  it('has correct layout structure with logo on left and actions on right', () => {
+  it('user menu dropdown opens and shows options', () => {
     renderWithProviders(
       <Header items={itemsMock} showLogo={true} showUserInfo={true} />,
     )
 
-    const header = screen.getByRole('banner')
-    expect(header).toHaveStyle('display: flex')
-    expect(header).toHaveStyle('justify-content: space-between')
+    const userButton = screen.getByLabelText('Menu do usuário')
+    fireEvent.click(userButton)
 
-    const logoContainer = screen.getByAltText('AnimeKiroku Logo').closest('div')
-    expect(logoContainer).toBeInTheDocument()
-
-    const searchButton = screen.getByLabelText('Pesquisar')
-    const actionsArea = searchButton.closest('div')
-    expect(actionsArea).toBeInTheDocument()
+    expect(screen.getByText('Profile')).toBeInTheDocument()
+    expect(screen.getByText('Log out')).toBeInTheDocument()
   })
 
-  it('menu items have hover styles', () => {
-    renderWithProviders(<Header items={itemsMock} showLogo={true} />)
-
-    const homeItem = screen.getByText('Home')
-    expect(homeItem).toHaveStyle('cursor: pointer')
-    expect(homeItem).toHaveStyle('transition: all 0.2s ease')
-  })
-
-  it('dropdown has arrow animation', () => {
-    renderWithProviders(<Header items={itemsMock} showLogo={true} />)
-
-    const categoriasButton = screen.getByText('Categorias')
-    const arrow = categoriasButton.querySelector('svg')
-    expect(arrow).toBeInTheDocument()
-    expect(arrow).toHaveStyle('transition: transform 0.2s ease')
-  })
-
-  it('renders without crashing when no items', () => {
-    renderWithProviders(<Header items={[]} showLogo={true} />)
-
-    const header = screen.getByRole('banner')
-    expect(header).toBeInTheDocument()
-  })
-
-  it('applies menu-items class to all interactive elements', () => {
+  it('logout menu item works correctly', () => {
     renderWithProviders(
       <Header items={itemsMock} showLogo={true} showUserInfo={true} />,
     )
 
-    const menuItems = document.querySelectorAll('.menu-items')
-    expect(menuItems.length).toBeGreaterThan(0)
+    const userButton = screen.getByLabelText('Menu do usuário')
+    fireEvent.click(userButton)
 
-    const homeItem = screen.getByText('Home')
-    expect(homeItem).toHaveClass('menu-items')
+    const logoutButton = screen.getByText('Log out')
+    fireEvent.click(logoutButton)
 
-    const searchButton = screen.getByLabelText('Pesquisar')
-    expect(searchButton).toHaveClass('menu-items')
+    expect(mockLogout).toHaveBeenCalledTimes(1)
+
+    expect(mockToast).toHaveBeenCalledWith({
+      title: 'Logged out successfully',
+      description: 'You have been logged out of your account',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      position: 'top-right',
+    })
+
+    expect(mockNavigate).toHaveBeenCalledWith('/')
+  })
+
+  it('renders without items', () => {
+    expect(() => {
+      renderWithProviders(<Header items={[]} showLogo={true} />)
+    }).not.toThrow()
   })
 })

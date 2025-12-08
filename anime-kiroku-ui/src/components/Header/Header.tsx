@@ -6,10 +6,17 @@ import {
   MenuButton,
   MenuItem,
   IconButton,
-  Avatar,
+  useToast,
 } from '@chakra-ui/react'
 
-import { FiChevronDown, FiSearch, FiBookmark, FiHome } from 'react-icons/fi'
+import {
+  FiChevronDown,
+  FiSearch,
+  FiBookmark,
+  FiHome,
+  FiUser,
+  FiLogOut,
+} from 'react-icons/fi'
 import { type HeaderProps } from './Header.types'
 import logo from '../../assets/logo-lanternas.png'
 import {
@@ -19,21 +26,57 @@ import {
   NavArea,
   NavItem,
   DropdownTrigger,
+  DropdownContent,
   ActionsArea,
+  UserIconButton,
 } from './Header.styles'
-import { useNavigate } from 'react-router-dom'
+import { useNavigation } from '../../hooks/useNavigation'
+import { ROUTES } from '../../routes/routes'
+import { useAuth } from '../../hooks/useAuth'
+import { useCallback } from 'react'
 
 export default function Header({
   items,
   showLogo = true,
   showUserInfo = false,
 }: HeaderProps) {
-  const navigate = useNavigate()
+  const { goTo } = useNavigation()
+  const toast = useToast()
+  const { logout } = useAuth()
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault()
-    navigate('/')
+    goTo('/')
   }
+
+  const handleSearchClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    goTo(ROUTES.SEARCH)
+  }
+
+  const handleProfileClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    goTo(ROUTES.PROFILE)
+  }
+
+  const handleLogout = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault()
+      logout()
+
+      toast({
+        title: 'Logged out successfully',
+        description: 'You have been logged out of your account',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      })
+
+      goTo(ROUTES.LANDING)
+    },
+    [goTo, logout, toast],
+  )
 
   return (
     <HeaderWrapper>
@@ -54,14 +97,18 @@ export default function Header({
                 {({ isOpen }) => (
                   <>
                     <MenuButton as={DropdownTrigger} className="menu-items">
-                      {item.label}
-                      <FiChevronDown
-                        size={16}
-                        style={{
-                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.2s ease',
-                        }}
-                      />
+                      <DropdownContent>
+                        <FiChevronDown
+                          size={14}
+                          style={{
+                            transform: isOpen
+                              ? 'rotate(180deg)'
+                              : 'rotate(0deg)',
+                            transition: 'transform 0.2s ease',
+                          }}
+                        />
+                        <Text ml={1}>{item.label}</Text>
+                      </DropdownContent>
                     </MenuButton>
                     <MenuList className="menu-items">
                       {item.children?.map((child) => (
@@ -92,13 +139,13 @@ export default function Header({
         </NavArea>
       </LogoContainer>
 
-      {/* Área da direita: Ações */}
       <ActionsArea>
         <IconButton
           aria-label="Pesquisar"
           icon={<FiSearch />}
           variant="ghost"
           className="menu-items"
+          onClick={handleSearchClick}
         />
 
         {showUserInfo && (
@@ -111,15 +158,26 @@ export default function Header({
             />
 
             <Menu>
-              <MenuButton>
-                <Avatar size="sm" src="/avatar.png" />
-              </MenuButton>
+              <MenuButton
+                as={UserIconButton}
+                aria-label="Menu do usuário"
+                icon={<FiUser />}
+              />
               <MenuList className="menu-items">
-                <MenuItem className="menu-items" icon={<FiHome />}>
-                  Perfil
+                <MenuItem
+                  className="menu-items"
+                  icon={<FiHome />}
+                  onClick={handleProfileClick}
+                >
+                  Profile
                 </MenuItem>
-                <MenuItem className="menu-items">Configurações</MenuItem>
-                <MenuItem className="menu-items">Sair</MenuItem>
+                <MenuItem
+                  className="menu-items"
+                  icon={<FiLogOut />}
+                  onClick={handleLogout}
+                >
+                  Log out
+                </MenuItem>
               </MenuList>
             </Menu>
           </>
