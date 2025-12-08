@@ -5,7 +5,6 @@ export interface AnimeCardProps {
   image: string
   imageAlt?: string
   title?: string
-  seasons?: number
   episodes?: number
   description?: string
   showTitleBelow?: boolean
@@ -13,6 +12,7 @@ export interface AnimeCardProps {
   onAdd?: (id?: string | number) => void
   onReview?: (id?: string | number) => void
   className?: string
+  score?: number
 }
 
 export interface AnimeCardOverlayProps {
@@ -22,4 +22,6 @@ export interface AnimeCardOverlayProps {
   description?: string
   onAdd?: () => void
   onReview?: () => void
+  score?: number
+  genres?: string[]
 }

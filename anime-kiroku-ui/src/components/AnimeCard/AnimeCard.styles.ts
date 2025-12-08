@@ -12,17 +12,27 @@ export const CardContainer = styled(Box)<{ size?: CardSize }>`
   position: relative;
   width: ${({ size = 'md' }) => sizeMap[size].width};
   height: ${({ size = 'md' }) => sizeMap[size].height};
-  border-radius: var(--chakra-radii-lg);
+  border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 
     .anime-card-overlay {
       opacity: 1;
       visibility: visible;
+    }
+
+    .episode-badge {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    img {
+      transform: scale(1.05);
     }
   }
 `
@@ -33,6 +43,7 @@ export const CardImage = styled.img`
   object-fit: cover;
   object-position: center;
   display: block;
+  transition: transform 0.4s ease;
 `
 
 export const Overlay = styled(Box)`
@@ -41,116 +52,97 @@ export const Overlay = styled(Box)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0.85) 100%
-  );
-  padding: var(--chakra-space-md);
+  background: rgba(0, 0, 0, 0.85);
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  color: var(--chakra-colors-text-inverted);
+  color: white;
 `
 
 export const OverlayContent = styled(Box)`
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--chakra-space-sm);
+  overflow: hidden;
 `
 
 export const OverlayTitle = styled(Text)`
-  font-family: var(--chakra-fonts-heading);
-  font-weight: var(--chakra-fontWeights-bold);
-  font-size: ${({ size }: { size?: CardSize }) =>
-    size === 'sm'
-      ? 'var(--chakra-fontSizes-md)'
-      : size === 'lg'
-        ? 'var(--chakra-fontSizes-xl)'
-        : 'var(--chakra-fontSizes-lg)'};
-  color: var(--chakra-colors-text-inverted);
-  line-height: var(--chakra-lineHeights-base);
-  margin-bottom: var(--chakra-space-xs);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
 `
 
-export const OverlayDescription = styled(Text)`
-  font-size: var(--chakra-fontSizes-sm);
-  color: var(--chakra-colors-neutral-light);
-  line-height: var(--chakra-lineHeights-tall);
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 1;
-`
-
-export const StatsContainer = styled(Box)`
+export const EpisodeCount = styled(Box)`
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  padding: 4px 8px;
   display: flex;
-  gap: var(--chakra-space-md);
-  margin-top: var(--chakra-space-sm);
-`
-
-export const StatItem = styled(Box)`
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--chakra-space-xs);
-`
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
 
-export const StatLabel = styled(Text)`
-  font-size: var(--chakra-fontSizes-xs);
-  color: var(--chakra-colors-neutral-default);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`
-
-export const StatValue = styled(Text)`
-  font-size: var(--chakra-fontSizes-lg);
-  font-weight: var(--chakra-fontWeights-bold);
-  color: var(--chakra-colors-text-inverted);
+  & > p {
+    font-size: 11px;
+    font-weight: 500;
+  }
 `
 
 export const ActionsContainer = styled(Box)`
   display: flex;
   justify-content: center;
-  gap: var(--chakra-space-lg);
-  padding-top: var(--chakra-space-md);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 20px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 `
 
 export const ActionButton = styled(IconButton)`
-  background: transparent;
-  border: 2px solid var(--chakra-colors-secondary-default);
-  color: var(--chakra-colors-secondary-default);
-  border-radius: var(--chakra-radii-full);
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
 
   &:hover {
     background: var(--chakra-colors-secondary-default);
-    color: var(--chakra-colors-text-primary);
+    color: white;
     border-color: var(--chakra-colors-secondary-default);
+    transform: scale(1.1);
   }
 
   &:active {
     background: var(--chakra-colors-secondary-dark);
     border-color: var(--chakra-colors-secondary-dark);
+    transform: scale(0.95);
   }
 `
 
 export const TitleBelow = styled(Text)`
-  margin-top: var(--chakra-space-sm);
-  font-family: var(--chakra-fonts-heading);
-  font-weight: var(--chakra-fontWeights-semibold);
-  font-size: var(--chakra-fontSizes-md);
-  color: var(--chakra-colors-text-primary);
+  margin-top: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
   text-align: center;
-  line-height: var(--chakra-lineHeights-base);
+  line-height: 1.2;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { FaPlus, FaEdit } from 'react-icons/fa'
 import {
   CardContainer,
@@ -7,14 +7,10 @@ import {
   Overlay,
   OverlayContent,
   OverlayTitle,
-  OverlayDescription,
-  StatsContainer,
-  StatItem,
-  StatLabel,
-  StatValue,
   ActionsContainer,
   ActionButton,
   TitleBelow,
+  EpisodeCount,
 } from './AnimeCard.styles'
 import type { AnimeCardProps } from './AnimeCard.types'
 
@@ -23,7 +19,6 @@ export default function AnimeCard({
   image,
   imageAlt = 'Anime cover',
   title,
-  seasons,
   episodes,
   description,
   showTitleBelow = false,
@@ -46,8 +41,14 @@ export default function AnimeCard({
     onReview?.(id)
   }
 
+  const truncatedDescription = description
+    ? description.length > 100
+      ? `${description.substring(0, 100)}...`
+      : description
+    : ''
+
   return (
-    <Box className={className}>
+    <Box className={className} position="relative">
       <CardContainer
         size={size}
         onClick={handleCardClick}
@@ -55,41 +56,38 @@ export default function AnimeCard({
       >
         <CardImage src={image} alt={imageAlt} data-testid="anime-card-image" />
 
+        {episodes !== undefined && episodes > 0 && (
+          <EpisodeCount className="episode-badge" data-testid="episode-count">
+            <Text fontSize="xs" fontWeight="medium">
+              {episodes} EP
+            </Text>
+          </EpisodeCount>
+        )}
+
         <Overlay
           className="anime-card-overlay"
           data-testid="anime-card-overlay"
         >
           <OverlayContent>
             {title && (
-              <OverlayTitle size={size} data-testid="anime-card-title">
+              <OverlayTitle data-testid="anime-card-title">
                 {title}
               </OverlayTitle>
             )}
 
-            {description && (
-              <OverlayDescription data-testid="anime-card-description">
-                {description}
-              </OverlayDescription>
-            )}
-
-            {(seasons !== undefined || episodes !== undefined) && (
-              <StatsContainer data-testid="anime-card-stats">
-                {seasons !== undefined && (
-                  <StatItem>
-                    <StatValue data-testid="seasons-count">{seasons}</StatValue>
-                    <StatLabel>Temporada{seasons !== 1 ? 's' : ''}</StatLabel>
-                  </StatItem>
-                )}
-
-                {episodes !== undefined && (
-                  <StatItem>
-                    <StatValue data-testid="episodes-count">
-                      {episodes}
-                    </StatValue>
-                    <StatLabel>Episódio{episodes !== 1 ? 's' : ''}</StatLabel>
-                  </StatItem>
-                )}
-              </StatsContainer>
+            {truncatedDescription && (
+              <Text
+                fontSize="12px"
+                fontWeight="200"
+                color="rgba(255, 255, 255, 0.7)"
+                lineHeight="1.4"
+                mt={2}
+                mb={2}
+                noOfLines={4}
+                data-testid="anime-card-description"
+              >
+                {truncatedDescription}
+              </Text>
             )}
           </OverlayContent>
 
@@ -101,6 +99,7 @@ export default function AnimeCard({
                   aria-label="Adicionar à lista"
                   onClick={handleAddClick}
                   data-testid="add-button"
+                  title="Adicionar à minha lista"
                 />
               )}
 
@@ -110,6 +109,7 @@ export default function AnimeCard({
                   aria-label="Escrever review"
                   onClick={handleReviewClick}
                   data-testid="review-button"
+                  title="Escrever review"
                 />
               )}
             </ActionsContainer>
