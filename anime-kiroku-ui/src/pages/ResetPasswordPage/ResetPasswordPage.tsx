@@ -45,6 +45,7 @@ export default function ResetPasswordPage() {
         status: 'success',
         duration: 5000,
         isClosable: true,
+        position: 'top-right',
       })
     } catch (error) {
       toast({
@@ -53,6 +54,7 @@ export default function ResetPasswordPage() {
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top-right',
       })
     }
   }, [email, resetPassword, toast, validate])

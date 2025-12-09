@@ -115,6 +115,7 @@ export default function CreateAccountPage() {
         status: 'success',
         duration: 5000,
         isClosable: true,
+        position: 'top-right',
       })
 
       navigation.goToDashboard()
@@ -138,6 +139,7 @@ export default function CreateAccountPage() {
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top-right',
       })
     }
   }, [formData, validate, register, toast, navigation])

@@ -81,6 +81,7 @@ export default function LoginPage() {
         status: 'success',
         duration: 3000,
         isClosable: true,
+        position: 'top-right',
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -107,6 +108,7 @@ export default function LoginPage() {
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top-right',
       })
     }
   }, [formData, validate, login, navigation, toast])
