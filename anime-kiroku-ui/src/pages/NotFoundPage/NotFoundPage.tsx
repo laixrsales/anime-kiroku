@@ -18,14 +18,7 @@ import {
 
 export default function NotFoundPage() {
   return (
-    <PageBase
-      showHeaderLogo={true}
-      showUserInfo={false}
-      customHeaderItems={[
-        { label: 'Home', href: ROUTES.LANDING },
-        { label: 'Login', href: ROUTES.LOGIN },
-      ]}
-    >
+    <PageBase showHeaderLogo={true} showUserInfo={false}>
       <NotFoundContainer>
         <AnimationContainer>
           <FloatingShape
