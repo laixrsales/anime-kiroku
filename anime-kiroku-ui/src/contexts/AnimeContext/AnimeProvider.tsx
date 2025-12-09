@@ -1,6 +1,10 @@
-import { useState } from 'react'
-import { getTopAnime, searchAnime } from '../../services/animeService'
-import type { Anime, AnimeProviderProps } from './AnimeContext.types'
+import { useState, useCallback } from 'react'
+import {
+  getTopAnimes,
+  searchAnime,
+  type Anime,
+} from '../../services/animeService'
+import type { AnimeProviderProps, AnimeContextType } from './AnimeContext.types'
 import { AnimeContext } from './AnimeContext'
 
 export function AnimeProvider({ children }: AnimeProviderProps) {
@@ -9,11 +13,11 @@ export function AnimeProvider({ children }: AnimeProviderProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleGetTopAnime = async () => {
+  const handleGetTopAnimes = useCallback(async () => {
     setIsLoading(true)
     setError(null)
     try {
-      const data = await getTopAnime()
+      const data = await getTopAnimes()
       setAnimes(data)
     } catch (err) {
       setError('Erro ao buscar animes populares')
@@ -21,42 +25,49 @@ export function AnimeProvider({ children }: AnimeProviderProps) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
-  const handleSearchAnime = async (query: string) => {
-    if (!query.trim()) {
-      await handleGetTopAnime()
-      return
-    }
+  const handleSearchAnime = useCallback(
+    async (query: string) => {
+      if (!query.trim()) {
+        await handleGetTopAnimes()
+        return
+      }
 
-    setIsLoading(true)
-    setError(null)
-    try {
-      const data = await searchAnime(query)
-      setAnimes(data)
-    } catch (err) {
-      setError('Erro ao buscar animes')
-      console.error('Erro no AnimeContext:', err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+      setIsLoading(true)
+      setError(null)
+      try {
+        const data = await searchAnime(query)
+        setAnimes(data)
+      } catch (err) {
+        setError('Erro ao buscar animes')
+        console.error('Erro no AnimeContext:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [handleGetTopAnimes],
+  )
 
-  const clearAnimes = () => {
+  const clearAnimes = useCallback(() => {
     setAnimes([])
     setCurrentAnime(null)
     setError(null)
-  }
+  }, [])
 
-  const value = {
+  const setCurrentAnimeCallback = useCallback((anime: Anime | null) => {
+    setCurrentAnime(anime)
+  }, [])
+
+  const value: AnimeContextType = {
     animes,
     currentAnime,
     isLoading,
     error,
     searchAnime: handleSearchAnime,
-    getTopAnime: handleGetTopAnime,
+    getTopAnimes: handleGetTopAnimes,
     clearAnimes,
-    setCurrentAnime,
+    setCurrentAnime: setCurrentAnimeCallback,
   }
 
   return <AnimeContext.Provider value={value}>{children}</AnimeContext.Provider>
