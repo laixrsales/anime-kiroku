@@ -2,7 +2,7 @@ export type CardSize = 'sm' | 'md' | 'lg'
 
 export interface AnimeCardProps {
   id?: string | number
-  image: string
+  image?: string
   imageAlt?: string
   title?: string
   episodes?: number

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, Image } from '@chakra-ui/react'
 import { FaPlus, FaEdit } from 'react-icons/fa'
 import {
   CardContainer,
-  CardImage,
   Overlay,
   OverlayContent,
   OverlayTitle,
@@ -11,6 +10,7 @@ import {
   ActionButton,
   TitleBelow,
   EpisodeCount,
+  CardImageContainer,
 } from './AnimeCard.styles'
 import type { AnimeCardProps } from './AnimeCard.types'
 
@@ -54,7 +54,19 @@ export default function AnimeCard({
         onClick={handleCardClick}
         data-testid="anime-card"
       >
-        <CardImage src={image} alt={imageAlt} data-testid="anime-card-image" />
+        <CardImageContainer>
+          <Image
+            src={image}
+            alt={imageAlt}
+            fallbackSrc="/placeholder-anime.jpg"
+            fallback={<FallbackContent title={title} />}
+            objectFit="cover"
+            width="100%"
+            height="100%"
+            borderRadius="lg"
+            data-testid="anime-card-image"
+          />
+        </CardImageContainer>
 
         {episodes !== undefined && episodes > 0 && (
           <EpisodeCount className="episode-badge" data-testid="episode-count">
@@ -78,7 +90,7 @@ export default function AnimeCard({
             {truncatedDescription && (
               <Text
                 fontSize="12px"
-                fontWeight="200"
+                fontWeight="300"
                 color="rgba(255, 255, 255, 0.7)"
                 lineHeight="1.4"
                 mt={2}
@@ -123,3 +135,20 @@ export default function AnimeCard({
     </Box>
   )
 }
+
+const FallbackContent = ({ title }: { title?: string }) => (
+  <Box
+    width="100%"
+    height="100%"
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    backgroundColor="gray.100"
+    color="gray.500"
+    borderRadius="lg"
+  >
+    <Text fontSize="sm" textAlign="center" px={2}>
+      {title ? `${title}` : 'No image'}
+    </Text>
+  </Box>
+)

@@ -30,20 +30,14 @@ export const CardContainer = styled(Box)<{ size?: CardSize }>`
       opacity: 0;
       visibility: hidden;
     }
-
-    img {
-      transform: scale(1.05);
-    }
   }
 `
 
-export const CardImage = styled.img`
+export const CardImageContainer = styled(Box)`
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 0.4s ease;
+  position: relative;
+  overflow: hidden;
 `
 
 export const Overlay = styled(Box)`

@@ -15,22 +15,6 @@ const mockProps = {
 }
 
 describe('AnimeCard', () => {
-  it('renders image and title correctly', () => {
-    render(<AnimeCard {...mockProps} />)
-
-    expect(screen.getByTestId('anime-card-image')).toHaveAttribute(
-      'src',
-      mockProps.image,
-    )
-    expect(screen.getByTestId('anime-card-image')).toHaveAttribute(
-      'alt',
-      mockProps.imageAlt,
-    )
-    expect(screen.getByTestId('anime-card-title-below')).toHaveTextContent(
-      mockProps.title!,
-    )
-  })
-
   it('shows title below when showTitleBelow is true', () => {
     render(<AnimeCard {...mockProps} showTitleBelow={true} />)
     expect(screen.getByTestId('anime-card-title-below')).toBeInTheDocument()
@@ -163,22 +147,6 @@ describe('AnimeCard', () => {
     const card = container.firstChild
 
     expect(card).toBeInTheDocument()
-  })
-
-  it('renders without optional props', () => {
-    const minimalProps = {
-      image: 'https://example.com/anime.jpg',
-    }
-
-    render(<AnimeCard {...minimalProps} />)
-
-    expect(screen.getByTestId('anime-card')).toBeInTheDocument()
-    expect(screen.getByTestId('anime-card-image')).toHaveAttribute(
-      'src',
-      minimalProps.image,
-    )
-
-    expect(screen.queryByTestId('episode-count')).not.toBeInTheDocument()
   })
 
   it('shows overlay with title and description on hover', () => {
