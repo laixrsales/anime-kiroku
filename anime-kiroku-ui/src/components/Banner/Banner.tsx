@@ -5,12 +5,12 @@ import {
   ContentWrapper,
   Title,
   Subtitle,
+  ImageWrapper,
 } from './Banner.styles'
 import type { BannerProps } from './Banner.types'
 
 export default function Banner({
   imageUrl,
-  altText = 'Banner image',
   title,
   subtitle,
   height = '60vh',
@@ -38,12 +38,9 @@ export default function Banner({
       role={onClick ? 'button' : 'banner'}
       tabIndex={onClick ? 0 : undefined}
     >
-      <BannerImage
-        src={imageUrl}
-        alt={altText}
-        fadeIntensity={fadeIntensity}
-        data-testid="banner-image"
-      />
+      <ImageWrapper>
+        <BannerImage src={imageUrl} fadeIntensity={fadeIntensity} />
+      </ImageWrapper>
 
       <Overlay
         color={overlayColor}

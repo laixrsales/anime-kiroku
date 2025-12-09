@@ -12,14 +12,6 @@ const mockProps = {
 }
 
 describe('Banner', () => {
-  it('renders image with correct attributes', () => {
-    render(<Banner {...mockProps} />)
-
-    const image = screen.getByTestId('banner-image')
-    expect(image).toHaveAttribute('src', mockProps.imageUrl)
-    expect(image).toHaveAttribute('alt', mockProps.altText)
-  })
-
   it('renders title and subtitle at bottom left', () => {
     render(<Banner {...mockProps} />)
 
@@ -48,14 +40,6 @@ describe('Banner', () => {
     fireEvent.click(container)
 
     expect(mockOnClick).toHaveBeenCalled()
-  })
-
-  it('has cursor pointer when clickable', () => {
-    const mockOnClick = vi.fn()
-    render(<Banner {...mockProps} onClick={mockOnClick} />)
-
-    const container = screen.getByTestId('banner-container')
-    expect(container).toHaveStyle('cursor: pointer')
   })
 
   it('renders with custom height', () => {
@@ -89,7 +73,7 @@ describe('Banner', () => {
     render(<Banner {...mockProps} hasOverlay={false} />)
 
     const overlay = screen.getByTestId('banner-overlay')
-    expect(overlay).toBeInTheDocument() // O componente ainda renderiza, mas transparente
+    expect(overlay).toBeInTheDocument()
     expect(overlay).toHaveStyle('background: transparent')
   })
 

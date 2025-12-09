@@ -1,20 +1,58 @@
 import styled from '@emotion/styled'
-import { Box, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 export const BannerContainer = styled(Box)`
   position: relative;
   width: 100%;
   overflow: hidden;
-  cursor: ${({ onClick }: { onClick?: () => void }) =>
-    onClick ? 'pointer' : 'default'};
+  display: block;
 `
 
-export const BannerImage = styled.img<{ fadeIntensity: number }>`
+export const ImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+
+  mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 70%,
+    transparent 85%
+  );
+
+  filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.7));
+`
+
+export const BannerImage = styled.div<{ src: string; fadeIntensity: number }>`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: block;
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) ${({ fadeIntensity }) => fadeIntensity * 40}%,
+    rgba(0, 0, 0, 1) ${({ fadeIntensity }) => fadeIntensity * 60}%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) ${({ fadeIntensity }) => fadeIntensity * 40}%,
+    rgba(0, 0, 0, 1) ${({ fadeIntensity }) => fadeIntensity * 60}%,
+    rgba(0, 0, 0, 0) 100%
+  );
 `
 
 export const Overlay = styled(Box)<{
@@ -23,14 +61,11 @@ export const Overlay = styled(Box)<{
   hasOverlay: boolean
 }>`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: ${({ color, opacity, hasOverlay }) =>
-    hasOverlay ? `rgba(${parseColorToRGB(color)}, ${opacity})` : 'transparent'};
-  z-index: 1;
+  inset: 0;
   pointer-events: none;
+  background: ${({ hasOverlay, color }) =>
+    hasOverlay ? color : 'transparent'};
+  opacity: ${({ hasOverlay, opacity }) => (hasOverlay ? opacity : 0)};
 `
 
 export const ContentWrapper = styled(Box)`
@@ -38,63 +73,19 @@ export const ContentWrapper = styled(Box)`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 3;
-  padding: clamp(1.5rem, 4vw, 3rem);
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.9) 0%,
-      rgba(0, 0, 0, 0.7) 30%,
-      rgba(0, 0, 0, 0.4) 70%,
-      transparent 100%
-    );
-    z-index: -1;
-    pointer-events: none;
-  }
+  padding: var(--chakra-space-2xl);
+  z-index: 2;
+  color: white;
 `
 
-export const Title = styled(Text)`
-  font-family: var(--chakra-fonts-heading);
-  font-weight: var(--chakra-fontWeights-black);
-  font-size: clamp(1.75rem, 5vw, 3.5rem);
-  color: var(--chakra-colors-text-inverted);
-  margin-bottom: var(--chakra-space-sm);
-  line-height: 1.1;
-  text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.8),
-    0 4px 8px rgba(0, 0, 0, 0.6);
-  letter-spacing: -0.02em;
-  max-width: 800px;
+export const Title = styled.h1`
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
 `
 
-export const Subtitle = styled(Text)`
-  font-family: var(--chakra-fonts-body);
-  font-weight: var(--chakra-fontWeights-medium);
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: var(--chakra-colors-neutral-light);
-  line-height: var(--chakra-lineHeights-tall);
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.8),
-    0 2px 4px rgba(0, 0, 0, 0.6);
-  max-width: 600px;
+export const Subtitle = styled.p`
+  font-size: 1.25rem;
+  margin-top: var(--chakra-space-sm);
+  opacity: 0.8;
 `
-
-const parseColorToRGB = (color: string): string => {
-  if (color.startsWith('#')) {
-    const r = parseInt(color.slice(1, 3), 16)
-    const g = parseInt(color.slice(3, 5), 16)
-    const b = parseInt(color.slice(5, 7), 16)
-    return `${r}, ${g}, ${b}`
-  }
-  if (color.startsWith('rgb')) {
-    return color.match(/\d+/g)?.join(', ') || '0, 0, 0'
-  }
-  return '0, 0, 0'
-}
