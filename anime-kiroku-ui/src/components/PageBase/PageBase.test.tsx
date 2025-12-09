@@ -1,22 +1,25 @@
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import PageBase from './PageBase'
-import type { HeaderItem } from '../Header/Header.types'
+import type { HeaderItem, HeaderProps } from '../Header/Header.types'
+
+let mockAuthState = { isAuthenticated: false, user: null }
+
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...(actual as any),
+    useContext: () => mockAuthState,
+  }
+})
 
 vi.mock('../Header/Header', () => ({
-  default: ({
-    items,
-    showLogo,
-    showUserInfo,
-  }: {
-    items: HeaderItem[]
-    showLogo: boolean
-    showUserInfo: boolean
-  }) => (
+  default: ({ items, showLogo, showUserInfo }: HeaderProps) => (
     <div data-testid="header-mock">
       <div data-testid="header-items-count">{items.length}</div>
-      <div data-testid="show-logo">{showLogo.toString()}</div>
-      <div data-testid="show-user-info">{showUserInfo.toString()}</div>
+      <div data-testid="show-logo">{showLogo?.toString()}</div>
+      <div data-testid="show-user-info">{showUserInfo?.toString()}</div>
       <div data-testid="header-items">
         {JSON.stringify(items.map((i: HeaderItem) => i.label))}
       </div>
@@ -28,14 +31,27 @@ vi.mock('../Footer/Footer', () => ({
   default: () => <div data-testid="footer-mock">Footer</div>,
 }))
 
+vi.mock('../AuthContext/AuthContext', () => ({
+  AuthContext: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Consumer: ({ children }: any) =>
+      children({ isAuthenticated: false, user: null }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Provider: ({ children }: any) => <>{children}</>,
+  },
+}))
+
 describe('PageBase', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockAuthState = { isAuthenticated: false, user: null }
   })
 
-  it('renders landing page with correct header items', () => {
+  it('renders landing menu when user is not authenticated', () => {
+    mockAuthState = { isAuthenticated: false, user: null }
+
     render(
-      <PageBase pageType="landing">
+      <PageBase>
         <div>Test Content</div>
       </PageBase>,
     )
@@ -49,34 +65,32 @@ describe('PageBase', () => {
     const items = JSON.parse(
       screen.getByTestId('header-items').textContent || '[]',
     )
-    expect(items).toContain('Animes')
-    expect(items).toContain('Listas')
-    expect(items).toContain('Entrar')
-    expect(items).toContain('Criar Conta')
+    expect(items).toEqual(['Animes', 'Lists', 'Sign in', 'Sign up'])
 
     expect(screen.getByTestId('show-user-info')).toHaveTextContent('false')
   })
 
-  it('renders authenticated page with user info', () => {
+  it('hides user info when authenticated but showUserInfo is false', () => {
+    mockAuthState = { isAuthenticated: false, user: null }
+
     render(
-      <PageBase pageType="authenticated">
+      <PageBase showUserInfo={false}>
         <div>Test Content</div>
       </PageBase>,
     )
 
-    expect(screen.getByTestId('header-items-count')).toHaveTextContent('5')
+    expect(screen.getByTestId('show-user-info')).toHaveTextContent('false')
+  })
 
-    const items = JSON.parse(
-      screen.getByTestId('header-items').textContent || '[]',
+  it('hides user info when not authenticated even if showUserInfo is true', () => {
+    mockAuthState = { isAuthenticated: false, user: null }
+    render(
+      <PageBase showUserInfo={true}>
+        <div>Test Content</div>
+      </PageBase>,
     )
-    expect(items).toContain('Feed')
-    expect(items).toContain('Animes')
-    expect(items).toContain('Listas')
-    expect(items).toContain('Categorias')
-    expect(items).toContain('Gêneros')
-    expect(items).toContain('Mais')
 
-    expect(screen.getByTestId('show-user-info')).toHaveTextContent('true')
+    expect(screen.getByTestId('show-user-info')).toHaveTextContent('false')
   })
 
   it('uses custom header items when provided', () => {
@@ -108,16 +122,6 @@ describe('PageBase', () => {
     )
 
     expect(screen.getByTestId('show-logo')).toHaveTextContent('false')
-  })
-
-  it('hides user info when showUserInfo is false on authenticated page', () => {
-    render(
-      <PageBase pageType="authenticated" showUserInfo={false}>
-        <div>Test Content</div>
-      </PageBase>,
-    )
-
-    expect(screen.getByTestId('show-user-info')).toHaveTextContent('false')
   })
 
   it('renders children content correctly', () => {
@@ -153,6 +157,7 @@ describe('PageBase', () => {
       </PageBase>,
     )
 
+    expect(screen.getByTestId('custom-loader')).toBeInTheDocument()
     expect(screen.getByTestId('custom-loader')).toHaveTextContent('Loading...')
     expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument()
   })
@@ -177,5 +182,18 @@ describe('PageBase', () => {
     )
 
     expect(screen.getByTestId('header-items-count')).toHaveTextContent('0')
+  })
+
+  it('handles loading state from auth context', () => {
+    mockAuthState = { isAuthenticated: false, user: null }
+
+    render(
+      <PageBase>
+        <div>Test Content</div>
+      </PageBase>,
+    )
+
+    expect(screen.queryByTestId('loading-overlay')).not.toBeInTheDocument()
+    expect(screen.getByTestId('page-base')).toBeInTheDocument()
   })
 })

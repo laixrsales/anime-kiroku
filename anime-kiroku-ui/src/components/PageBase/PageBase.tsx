@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 import {
   PageContainer,
   MainContent,
@@ -10,35 +12,20 @@ import type { PageBaseProps } from './PageBase.types'
 
 const landingHeaderItems = [
   { label: 'Animes', href: '/animes' },
-  { label: 'Listas', href: '/listas' },
-  { label: 'Entrar', href: '/entrar' },
-  { label: 'Criar Conta', href: '/criar-conta' },
+  { label: 'Sign in', href: '/login' },
+  { label: 'Sign up', href: '/register' },
 ]
 
 const authenticatedHeaderItems = [
   { label: 'Feed', href: '/feed' },
   { label: 'Animes', href: '/animes' },
-  { label: 'Listas', href: '/listas' },
   {
-    label: 'Categorias',
+    label: 'Genres',
     children: [
-      { label: 'Ação', href: '/categorias/acao' },
-      { label: 'Romance', href: '/categorias/romance' },
-      { label: 'Comédia', href: '/categorias/comedia' },
-      { label: 'Drama', href: '/categorias/drama' },
-      { label: 'Aventura', href: '/categorias/aventura' },
-      { label: 'Fantasia', href: '/categorias/fantasia' },
-      { label: 'Suspense', href: '/categorias/suspense' },
-      { label: 'Terror', href: '/categorias/terror' },
-    ],
-  },
-  {
-    label: 'Gêneros',
-    children: [
-      { label: 'Shonen', href: '/generos/shonen' },
-      { label: 'Shojo', href: '/generos/shojo' },
-      { label: 'Seinen', href: '/generos/seinen' },
-      { label: 'Josei', href: '/generos/josei' },
+      { label: 'Shonen', href: '/genres/shonen' },
+      { label: 'Shojo', href: '/genres/shojo' },
+      { label: 'Seinen', href: '/genres/seinen' },
+      { label: 'Josei', href: '/genres/josei' },
     ],
   },
 ]
@@ -50,24 +37,24 @@ const DefaultLoadingSpinner = () => (
 )
 
 export default function PageBase({
-  pageType = 'authenticated',
   children,
   customHeaderItems,
   showHeaderLogo = true,
-  showUserInfo = true,
   className,
   isLoading = false,
   loadingComponent,
 }: PageBaseProps) {
+  const authContext = useContext(AuthContext)
+
   const getHeaderItems = () => {
     if (customHeaderItems) return customHeaderItems
 
-    return pageType === 'landing'
-      ? landingHeaderItems
-      : authenticatedHeaderItems
+    return authContext?.isAuthenticated
+      ? authenticatedHeaderItems
+      : landingHeaderItems
   }
 
-  const shouldShowUserInfo = pageType === 'authenticated' && showUserInfo
+  const shouldShowUserInfo = authContext?.isAuthenticated
 
   if (isLoading) {
     return loadingComponent || <DefaultLoadingSpinner />
