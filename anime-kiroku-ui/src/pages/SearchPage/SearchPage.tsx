@@ -175,14 +175,13 @@ export default function SearchPage() {
       image: anime.imageUrl,
       imageAlt: anime.title,
       title: anime.title,
-      episodes: anime.episodes || 0,
+      episodes: anime.episodes,
       description: anime.synopsis,
       showTitleBelow: true,
       size: 'md' as const,
       score: anime.score,
     }
   }, [])
-
   return (
     <PageBase showHeaderLogo={true} showUserInfo={true}>
       <SearchContainer>
