@@ -7,12 +7,15 @@ import {
   Card,
   LogoImage,
   YellowButton,
+  BackButton,
 } from './SimplePage.styles'
 import type { SimplePageProps } from './SimplePage.types'
 
 import bgImage from '../../assets/anime-panel.jpg'
 import logo from '../../assets/anime-kiroku-logo.png'
 import { ROUTES } from '../../routes/routes'
+import { FiArrowLeft } from 'react-icons/fi'
+import { useNavigation } from '../../hooks/useNavigation'
 
 export default function SimplePage({
   title,
@@ -21,10 +24,18 @@ export default function SimplePage({
   buttonTitle,
   onClick,
 }: SimplePageProps) {
+  const { goBack } = useNavigation()
+
+  const handleBackClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    goBack()
+  }
   return (
     <BackgroundWrapper style={{ backgroundImage: `url(${bgImage})` }}>
       <Overlay />
-
+      <BackButton onClick={handleBackClick} aria-label="Voltar">
+        <FiArrowLeft size={20} />
+      </BackButton>
       <Card>
         <RouterLink to={ROUTES.LANDING}>
           <LogoImage src={logo} alt="AnimeKiroku logo" />

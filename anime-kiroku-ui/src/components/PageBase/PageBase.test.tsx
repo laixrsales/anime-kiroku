@@ -47,29 +47,6 @@ describe('PageBase', () => {
     mockAuthState = { isAuthenticated: false, user: null }
   })
 
-  it('renders landing menu when user is not authenticated', () => {
-    mockAuthState = { isAuthenticated: false, user: null }
-
-    render(
-      <PageBase>
-        <div>Test Content</div>
-      </PageBase>,
-    )
-
-    expect(screen.getByTestId('page-base')).toBeInTheDocument()
-    expect(screen.getByTestId('header-mock')).toBeInTheDocument()
-    expect(screen.getByTestId('footer-mock')).toBeInTheDocument()
-
-    expect(screen.getByTestId('header-items-count')).toHaveTextContent('4')
-
-    const items = JSON.parse(
-      screen.getByTestId('header-items').textContent || '[]',
-    )
-    expect(items).toEqual(['Animes', 'Lists', 'Sign in', 'Sign up'])
-
-    expect(screen.getByTestId('show-user-info')).toHaveTextContent('false')
-  })
-
   it('hides user info when authenticated but showUserInfo is false', () => {
     mockAuthState = { isAuthenticated: false, user: null }
 

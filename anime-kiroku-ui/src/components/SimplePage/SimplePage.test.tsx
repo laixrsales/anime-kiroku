@@ -1,12 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 import SimplePage from './SimplePage'
+import { MemoryRouter } from 'react-router-dom'
 
 describe('SimplePage', () => {
+  function renderWithRouter(ui: React.ReactNode) {
+    return render(<MemoryRouter>{ui}</MemoryRouter>)
+  }
+
   it('renders title, children and button', () => {
     const fn = vi.fn()
 
-    render(
+    renderWithRouter(
       <SimplePage title="Login" buttonTitle="Sign in" onClick={fn}>
         <p>Child content</p>
       </SimplePage>,
@@ -20,7 +25,7 @@ describe('SimplePage', () => {
   it('calls onClick when button is clicked', () => {
     const fn = vi.fn()
 
-    render(
+    renderWithRouter(
       <SimplePage title="Login" buttonTitle="Sign in" onClick={fn}>
         <p>Child content</p>
       </SimplePage>,

@@ -36,11 +36,6 @@ export const Card = styled(Box)`
   gap: var(--chakra-space-md);
   align-items: center;
   box-shadow: var(--chakra-shadows-card);
-
-  /*@media (prefers-color-scheme: dark) {
-    background: var(--chakra-colors-background-dark);
-    color: var(--chakra-colors-text-inverted);
-  }*/
 `
 
 export const LogoImage = styled.img`
@@ -73,5 +68,30 @@ export const StyledInput = styled(Input)`
   &:focus {
     border-color: var(--chakra-colors-secondary-default);
     box-shadow: 0 0 0 1px var(--chakra-colors-secondary-default);
+  }
+`
+
+export const BackButton = styled(Button)`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  backdrop-filter: blur(4px);
+
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.65);
   }
 `
