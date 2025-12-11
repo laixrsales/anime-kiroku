@@ -9,14 +9,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 
-import {
-  FiChevronDown,
-  FiSearch,
-  FiBookmark,
-  FiHome,
-  FiUser,
-  FiLogOut,
-} from 'react-icons/fi'
+import { FiChevronDown, FiSearch, FiLogOut } from 'react-icons/fi'
 import { type HeaderProps } from './Header.types'
 import logo from '../../assets/logo-lanternas.png'
 import {
@@ -28,7 +21,6 @@ import {
   DropdownTrigger,
   DropdownContent,
   ActionsArea,
-  UserIconButton,
 } from './Header.styles'
 import { useNavigation } from '../../hooks/useNavigation'
 import { ROUTES } from '../../routes/routes'
@@ -52,11 +44,6 @@ export default function Header({
   const handleSearchClick = (e: React.MouseEvent) => {
     e.preventDefault()
     goTo(ROUTES.SEARCH)
-  }
-
-  const handleProfileClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    goTo(ROUTES.PROFILE)
   }
 
   const handleLogout = useCallback(
@@ -149,38 +136,13 @@ export default function Header({
         />
 
         {showUserInfo && (
-          <>
-            <IconButton
-              aria-label="Favoritos"
-              icon={<FiBookmark />}
-              variant="ghost"
-              className="menu-items"
-            />
-
-            <Menu>
-              <MenuButton
-                as={UserIconButton}
-                aria-label="Menu do usuário"
-                icon={<FiUser />}
-              />
-              <MenuList className="menu-items">
-                <MenuItem
-                  className="menu-items"
-                  icon={<FiHome />}
-                  onClick={handleProfileClick}
-                >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  className="menu-items"
-                  icon={<FiLogOut />}
-                  onClick={handleLogout}
-                >
-                  Log out
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </>
+          <IconButton
+            aria-label="Sair"
+            icon={<FiLogOut />}
+            variant="ghost"
+            className="menu-items"
+            onClick={handleLogout}
+          />
         )}
       </ActionsArea>
     </HeaderWrapper>
