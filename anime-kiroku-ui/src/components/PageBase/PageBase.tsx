@@ -11,23 +11,13 @@ import {
 import type { PageBaseProps } from './PageBase.types'
 
 const landingHeaderItems = [
-  { label: 'Animes', href: '/animes' },
   { label: 'Sign in', href: '/login' },
   { label: 'Sign up', href: '/register' },
 ]
 
 const authenticatedHeaderItems = [
-  { label: 'Feed', href: '/feed' },
-  { label: 'Animes', href: '/animes' },
-  {
-    label: 'Genres',
-    children: [
-      { label: 'Shonen', href: '/genres/shonen' },
-      { label: 'Shojo', href: '/genres/shojo' },
-      { label: 'Seinen', href: '/genres/seinen' },
-      { label: 'Josei', href: '/genres/josei' },
-    ],
-  },
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Your favorites', href: '/favorites' },
 ]
 
 const DefaultLoadingSpinner = () => (
