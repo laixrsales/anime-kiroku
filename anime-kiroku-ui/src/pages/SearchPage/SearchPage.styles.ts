@@ -155,7 +155,7 @@ export const SearchInputWrapper = styled(Box)`
   margin-top: var(--chakra-space-6);
   padding: 0 var(--chakra-space-4);
 
-  .chakra-input__group {
+  & [data-search-input-group] {
     backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 0.03);
     border-radius: var(--chakra-radii-xl);
@@ -184,7 +184,7 @@ export const SearchInputWrapper = styled(Box)`
     }
   }
 
-  .chakra-input {
+  & [data-search-input] {
     font-size: 1rem;
     font-weight: var(--chakra-fontWeights-medium);
     padding-left: var(--chakra-space-12);
@@ -201,7 +201,7 @@ export const SearchInputWrapper = styled(Box)`
     }
   }
 
-  .chakra-button {
+  & [data-search-button] {
     margin-top: var(--chakra-space-6);
     padding: var(--chakra-space-4) var(--chakra-space-10);
     font-size: 1.1rem;
@@ -258,7 +258,7 @@ export const RecentSearchesContainer = styled(Box)`
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
-  .chakra-text {
+  & [data-recent-searches-text] {
     font-size: 0.875rem;
     display: flex;
     align-items: center;
@@ -269,7 +269,7 @@ export const RecentSearchesContainer = styled(Box)`
     }
   }
 
-  .chakra-button[aria-label='Clear All'] {
+  & [data-clear-all-button] {
     font-size: 0.75rem;
     padding: var(--chakra-space-1) var(--chakra-space-3);
     height: auto;
@@ -359,7 +359,7 @@ export const ResultsContainer = styled(Box)`
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.02);
 
-  .chakra-text {
+  & [data-search-results-text] {
     font-size: 1.125rem;
     font-weight: var(--chakra-fontWeights-semibold);
     text-align: center;
@@ -380,12 +380,11 @@ export const ResultsContainer = styled(Box)`
     }
   }
 
-  .chakra-simple-grid {
+  & [data-search-results-grid] {
     width: 100%;
   }
 
-  /* Estilos específicos para os AnimeCards */
-  .anime-card-container {
+  & [data-anime-card-container] {
     height: 100%;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -394,7 +393,7 @@ export const ResultsContainer = styled(Box)`
       z-index: 10;
     }
 
-    .anime-card {
+    & [data-anime-card] {
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -411,7 +410,7 @@ export const ResultsContainer = styled(Box)`
         transform: scale(1.05);
       }
 
-      .title-section {
+      & [data-anime-card-title] {
         background: rgba(255, 255, 255, 0.05);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding: var(--chakra-space-4);
@@ -437,7 +436,7 @@ export const ResultsContainer = styled(Box)`
         }
       }
 
-      .score-badge {
+      & [data-anime-card-score] {
         position: absolute;
         top: var(--chakra-space-2);
         right: var(--chakra-space-2);
@@ -458,12 +457,12 @@ export const ResultsContainer = styled(Box)`
     padding: var(--chakra-space-4);
     margin-top: var(--chakra-space-6);
 
-    .chakra-text {
+    & [data-search-results-text] {
       font-size: 1rem;
       margin-bottom: var(--chakra-space-6);
     }
 
-    .anime-card-container .anime-card img {
+    & [data-anime-card-container] [data-anime-card] img {
       height: 220px;
     }
   }
@@ -492,14 +491,14 @@ export const EmptyStateContainer = styled(Box)`
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   }
 
-  .chakra-text:first-of-type {
+  & [data-empty-state-title] {
     font-size: 1.25rem;
     font-weight: var(--chakra-fontWeights-semibold);
     margin-bottom: var(--chakra-space-2);
     color: var(--chakra-colors-text-inverted);
   }
 
-  .chakra-text:last-of-type {
+  & [data-empty-state-description] {
     font-size: 0.95rem;
     color: var(--chakra-colors-neutral-light);
     opacity: 0.8;
@@ -510,11 +509,11 @@ export const EmptyStateContainer = styled(Box)`
     margin-top: var(--chakra-space-6);
     max-width: 90%;
 
-    .chakra-text:first-of-type {
+    & [data-empty-state-title] {
       font-size: 1.1rem;
     }
 
-    .chakra-text:last-of-type {
+    & [data-empty-state-description] {
       font-size: 0.9rem;
     }
   }
@@ -535,7 +534,7 @@ export const LoadingContainer = styled(Box)`
   max-width: 500px;
   backdrop-filter: blur(10px);
 
-  .chakra-spinner {
+  & [data-loading-spinner] {
     width: 60px;
     height: 60px;
 
@@ -545,12 +544,12 @@ export const LoadingContainer = styled(Box)`
     }
   }
 
-  .chakra-text {
+  & [data-loading-text] {
     margin-top: var(--chakra-space-4);
     font-size: 0.95rem;
     color: var(--chakra-colors-neutral-light);
     opacity: 0.8;
-    animation: pulse 2s ease-in-out infinite;
+    animation: ${pulse} 2s ease-in-out infinite;
   }
 
   @media (max-width: 768px) {
@@ -558,7 +557,7 @@ export const LoadingContainer = styled(Box)`
     margin-top: var(--chakra-space-6);
     min-height: 150px;
 
-    .chakra-spinner {
+    & [data-loading-spinner] {
       width: 50px;
       height: 50px;
     }

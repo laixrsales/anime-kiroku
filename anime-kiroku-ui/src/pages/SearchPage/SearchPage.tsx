@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Input,
@@ -19,7 +18,6 @@ import {
 import { FiSearch, FiX, FiClock, FiTrendingUp } from 'react-icons/fi'
 import PageBase from '../../components/PageBase/PageBase'
 import AnimeCard from '../../components/AnimeCard/AnimeCard'
-import { ROUTES } from '../../routes/routes'
 import { searchAnime } from '../../services/animeService'
 import { type Anime } from '../../services/animeService'
 
@@ -37,6 +35,7 @@ import {
   EmptyStateContainer,
   LoadingContainer,
 } from './SearchPage.styles'
+import { useNavigation } from '../../hooks/useNavigation'
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -45,8 +44,8 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isTyping, setIsTyping] = useState(false)
-  const navigate = useNavigate()
   const debounceTimer = useRef<NodeJS.Timeout | null>(null)
+  const { goTo } = useNavigation()
 
   useEffect(() => {
     const savedSearches = localStorage.getItem('anime-recent-searches')
@@ -169,19 +168,25 @@ export default function SearchPage() {
     localStorage.removeItem('anime-recent-searches')
   }, [])
 
-  const convertAnimeToCardProps = useCallback((anime: Anime) => {
-    return {
-      id: anime.jikanId,
-      image: anime.imageUrl,
-      imageAlt: anime.title,
-      title: anime.title,
-      episodes: anime.episodes,
-      description: anime.synopsis,
-      showTitleBelow: true,
-      size: 'md' as const,
-      score: anime.score,
-    }
-  }, [])
+  const convertAnimeToCardProps = useCallback(
+    (anime: Anime) => {
+      return {
+        image: anime.imageUrl,
+        imageAlt: anime.title,
+        title: anime.title,
+        episodes: anime.episodes,
+        description: anime.synopsis,
+        showTitleBelow: true,
+        size: 'md' as const,
+        score: anime.score,
+        onClick: () => goTo(`/anime/${anime.jikanId}`),
+        showOverlay: true,
+        'data-anime-card': 'true',
+      }
+    },
+    [goTo],
+  )
+
   return (
     <PageBase showHeaderLogo={true} showUserInfo={true}>
       <SearchContainer>
@@ -227,12 +232,13 @@ export default function SearchPage() {
           </SearchDescription>
 
           <SearchInputWrapper>
-            <InputGroup size="lg">
+            <InputGroup size="lg" data-search-input-group="true">
               <InputLeftElement pointerEvents="none">
                 <FiSearch color="var(--chakra-colors-neutral-light)" />
               </InputLeftElement>
 
               <Input
+                data-search-input="true"
                 placeholder="Search for anime..."
                 value={searchQuery}
                 onChange={handleInputChange}
@@ -274,6 +280,7 @@ export default function SearchPage() {
                   <HStack>
                     <FiClock />
                     <Text
+                      data-recent-searches-text="true"
                       color="var(--chakra-colors-neutral-light)"
                       fontSize="sm"
                     >
@@ -281,6 +288,7 @@ export default function SearchPage() {
                     </Text>
                   </HStack>
                   <Button
+                    data-clear-all-button="true"
                     size="xs"
                     variant="ghost"
                     onClick={handleClearRecentSearches}
@@ -343,9 +351,17 @@ export default function SearchPage() {
 
           {(loading || isTyping) && (
             <LoadingContainer>
-              <Spinner size="xl" color="secondary.default" />
+              <Spinner
+                data-loading-spinner="true"
+                size="xl"
+                color="secondary.default"
+              />
               {isTyping && !loading && (
-                <Text color="var(--chakra-colors-neutral-light)" mt={4}>
+                <Text
+                  data-loading-text="true"
+                  color="var(--chakra-colors-neutral-light)"
+                  mt={4}
+                >
                   Typing...
                 </Text>
               )}
@@ -370,6 +386,7 @@ export default function SearchPage() {
           {searchResults.length > 0 && !loading && (
             <ResultsContainer>
               <Text
+                data-search-results-text="true"
                 fontSize="lg"
                 color="var(--chakra-colors-text-inverted)"
                 mb={6}
@@ -378,18 +395,14 @@ export default function SearchPage() {
               </Text>
 
               <SimpleGrid
+                data-search-results-grid="true"
                 columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                 spacing={{ base: 4, md: 6 }}
               >
                 {searchResults.map((anime) => (
-                  <AnimeCard
-                    key={anime.jikanId}
-                    {...convertAnimeToCardProps(anime)}
-                    onAdd={() => console.log('Add anime:', anime.jikanId)}
-                    onReview={() =>
-                      navigate(`${ROUTES.ANIME_DETAIL}/${anime.jikanId}`)
-                    }
-                  />
+                  <Box key={anime.jikanId} data-anime-card-container="true">
+                    <AnimeCard {...convertAnimeToCardProps(anime)} />
+                  </Box>
                 ))}
               </SimpleGrid>
             </ResultsContainer>
@@ -406,13 +419,18 @@ export default function SearchPage() {
                   color="var(--chakra-colors-neutral-light)"
                 />
                 <Text
+                  data-empty-state-title="true"
                   fontSize="lg"
                   color="var(--chakra-colors-text-inverted)"
                   mt={4}
                 >
                   No results found for "{searchQuery}"
                 </Text>
-                <Text color="var(--chakra-colors-neutral-light)" mt={2}>
+                <Text
+                  data-empty-state-description="true"
+                  color="var(--chakra-colors-neutral-light)"
+                  mt={2}
+                >
                   Try different keywords or check your spelling
                 </Text>
               </EmptyStateContainer>
