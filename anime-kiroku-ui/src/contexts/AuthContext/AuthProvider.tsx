@@ -3,10 +3,14 @@ import {
   login as loginService,
   logout as logoutService,
   register as registerService,
+  getUserFromToken,
   type Credentials,
-  type User as UserData,
+  type RegisterData,
+  type User,
+  type LoginResponse,
+  type RegisterResponse,
 } from '../../services/authService'
-import type { AuthProviderProps, User } from './AuthContext.types'
+import type { AuthProviderProps, RegisterResult } from './AuthContext.types'
 import { AuthContext } from './AuthContext'
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -14,43 +18,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const loadUser = () => {
       setIsLoading(true)
       try {
-        const token = localStorage.getItem('token')
-
-        if (token) {
-          const userData = localStorage.getItem('user_data')
-          if (userData) {
-            setUser(JSON.parse(userData))
-          }
-        }
+        const userData = getUserFromToken()
+        setUser(userData)
       } catch (error) {
-        console.error('Erro ao verificar autenticação:', error)
-        logoutService()
+        console.error('Erro ao carregar usuário:', error)
+        setUser(null)
       } finally {
         setIsLoading(false)
       }
     }
 
-    checkAuth()
+    loadUser()
   }, [])
 
-  const login = async (email: string, password: string) => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<LoginResponse> => {
     setIsLoading(true)
     try {
       const credentials: Credentials = { email, password }
-      const response = await loginService(credentials)
+      const response: LoginResponse = await loginService(credentials)
 
-      const userData: User = {
-        id: response.token,
-        name: email.split('@')[0],
-        email: email,
-        username: email.split('@')[0],
-      }
-
-      localStorage.setItem('user_data', JSON.stringify(userData))
+      const userData = getUserFromToken()
       setUser(userData)
+
+      return response
     } catch (error) {
       console.error('Erro no login:', error)
       throw error
@@ -61,31 +57,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = () => {
     logoutService()
-    localStorage.removeItem('user_data')
     setUser(null)
   }
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<RegisterResult> => {
     setIsLoading(true)
     try {
-      const userData: UserData = {
+      const userData: RegisterData = {
         email,
-        username: name,
+        username,
         password,
       }
 
-      const response = await registerService(userData)
+      const registerResponse: RegisterResponse = await registerService(userData)
 
-      const user: User = {
-        id: response.id.toString(),
-        name: response.username,
-        email: response.email,
-        username: response.username,
-        createdAt: response.createdAt,
-      }
+      const loginResponse: LoginResponse = await loginService({
+        email,
+        password,
+      })
 
-      localStorage.setItem('user_data', JSON.stringify(user))
-      setUser(user)
+      const currentUser = getUserFromToken()
+      setUser(currentUser)
+
+      return { registerResponse, loginResponse }
     } catch (error) {
       console.error('Erro no registro:', error)
       throw error
@@ -94,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  const resetPassword = async (email: string) => {
+  const resetPassword = async (email: string): Promise<void> => {
     setIsLoading(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000))

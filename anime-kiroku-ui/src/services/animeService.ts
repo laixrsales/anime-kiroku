@@ -31,11 +31,8 @@ export const getAnimeById = async (id: number): Promise<Anime> => {
 }
 
 export const getAnimeRecommendations = async (
-  page: number = 1,
-  limit: number = 10,
+  animeId: number,
 ): Promise<Anime[]> => {
-  const response = await api.get(
-    `/anime/recommendations?page=${page}&limit=${limit}`,
-  )
+  const response = await api.get(`/anime/${animeId}/recommendations`)
   return response.data.data
 }

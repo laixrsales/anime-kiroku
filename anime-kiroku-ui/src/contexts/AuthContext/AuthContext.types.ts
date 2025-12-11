@@ -1,21 +1,26 @@
 import type { ReactNode } from 'react'
+import type {
+  User,
+  LoginResponse,
+  RegisterResponse,
+} from '../../services/authService'
 
-export interface User {
-  id: string
-  name: string
-  email: string
-  username?: string
-  avatar?: string
-  createdAt?: Date
+export interface RegisterResult {
+  registerResponse: RegisterResponse
+  loginResponse: LoginResponse
 }
 
 export interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
   isLoading: boolean
-  login: (email: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<LoginResponse>
   logout: () => void
-  register: (name: string, email: string, password: string) => Promise<void>
+  register: (
+    name: string,
+    email: string,
+    password: string,
+  ) => Promise<RegisterResult>
   resetPassword: (email: string) => Promise<void>
 }
 
