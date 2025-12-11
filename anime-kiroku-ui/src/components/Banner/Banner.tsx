@@ -6,6 +6,7 @@ import {
   Title,
   Subtitle,
   ImageWrapper,
+  LogoWrapper,
 } from './Banner.styles'
 import type { BannerProps } from './Banner.types'
 
@@ -19,6 +20,8 @@ export default function Banner({
   overlayColor = 'var(--chakra-colors-background-dark)',
   overlayOpacity = 0.3,
   className,
+  showLogo = false,
+  logoUrl,
   onClick,
 }: BannerProps) {
   const handleClick = () => {
@@ -48,6 +51,12 @@ export default function Banner({
         hasOverlay={hasOverlay}
         data-testid="banner-overlay"
       />
+
+      {showLogo && logoUrl && (
+        <LogoWrapper>
+          <img src={logoUrl} alt="Site logo" />
+        </LogoWrapper>
+      )}
 
       {(title || subtitle) && (
         <ContentWrapper data-testid="banner-content">

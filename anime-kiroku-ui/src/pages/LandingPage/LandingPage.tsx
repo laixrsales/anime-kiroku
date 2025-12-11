@@ -11,6 +11,7 @@ import PageBase from '../../components/PageBase/PageBase'
 import Banner from '../../components/Banner/Banner'
 import { ROUTES } from '../../routes/routes'
 import animeBanner from '../../assets/anime-banner.png'
+import logo from '../../assets/logo-lanternas.png'
 import {
   HeroSection,
   ContentSection,
@@ -64,8 +65,10 @@ export default function LandingPage() {
       <HeroSection>
         <Banner
           imageUrl={animeBanner}
+          logoUrl={logo}
+          showLogo
           altText="Anime Banner"
-          title="Welcome to AnimeKiroku"
+          title="AnimeKiroku"
           subtitle="Your ultimate platform to track, organize, and discover anime"
           height="65vh"
           hasOverlay={true}

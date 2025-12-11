@@ -5,7 +5,13 @@ export const BannerContainer = styled(Box)`
   position: relative;
   width: 100%;
   overflow: hidden;
-  display: block;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
 `
 
 export const ImageWrapper = styled.div`
@@ -69,23 +75,40 @@ export const Overlay = styled(Box)<{
 `
 
 export const ContentWrapper = styled(Box)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--chakra-space-2xl);
-  z-index: 2;
+  z-index: 3;
   color: white;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 1rem;
 `
 
 export const Title = styled.h1`
   font-size: 3rem;
   font-weight: bold;
   margin: 0;
+  text-align: center;
 `
 
 export const Subtitle = styled.p`
   font-size: 1.25rem;
   margin-top: var(--chakra-space-sm);
   opacity: 0.8;
+  text-align: center;
+`
+
+export const LogoWrapper = styled.div`
+  z-index: 3;
+  margin-bottom: 1rem;
+
+  img {
+    max-width: 380px;
+    height: auto;
+  }
+
+  pointer-events: none;
 `

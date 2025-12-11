@@ -9,5 +9,7 @@ export interface BannerProps {
   overlayColor?: string
   overlayOpacity?: number
   className?: string
+  showLogo?: boolean
+  logoUrl?: string
   onClick?: () => void
 }
