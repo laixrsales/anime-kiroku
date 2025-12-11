@@ -118,7 +118,3 @@ npm run preview
 
 Este projeto foi desenvolvido exclusivamente para fins educacionais na disciplina **INF321 – Projeto e Desenvolvimento de Sistemas Web** e não possui uma licença formal de distribuição.
 Você está livre para consultar, estudar e se inspirar no código, mas não há garantia de manutenção nem de uso para fins comerciais.
-
-```
-
-```
