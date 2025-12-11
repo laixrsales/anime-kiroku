@@ -143,12 +143,7 @@ export default function LoginPage() {
         <FormErrorMessage>{errors.password}</FormErrorMessage>
       </FormControl>
 
-      <HStack justify="space-between" width="100%" pt={2}>
-        <RouterLink to={ROUTES.RESET_PASSWORD}>
-          <Link href="#" fontSize="sm" color="blue.500">
-            Forgot password?
-          </Link>
-        </RouterLink>
+      <HStack alignContent="flex-end" width="100%" pt={2}>
         <RouterLink to={ROUTES.REGISTER}>
           <Link href="#" fontSize="sm" color="blue.500">
             Create account
