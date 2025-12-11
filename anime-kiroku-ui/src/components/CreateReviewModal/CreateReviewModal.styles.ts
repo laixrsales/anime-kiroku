@@ -7,7 +7,8 @@ export const ModalContainer = styled(VStack)`
   border-radius: var(--chakra-radii-2xl);
   width: 100%;
   gap: var(--chakra-space-lg);
-  border: 1px solid var(--chakra-colors-neutral-border);
+  border: 1px solid;
+  border-color: var(--chakra-colors-neutral-border);
   color: var(--chakra-colors-text-inverted);
 `
 
@@ -65,7 +66,8 @@ export const GuidelinesBox = styled.div`
   border-radius: var(--chakra-radii-lg);
   width: 100%;
   font-size: 0.9rem;
-  border: 1px solid var(--chakra-colors-neutral-border);
+  border: 1px solid;
+  border-color: var(--chakra-colors-neutral-border);
   opacity: 0.9;
 
   p + p {
@@ -102,7 +104,8 @@ export const PrimaryButton = styled(Button)`
 
 export const SecondaryButton = styled(Button)`
   background: transparent;
-  border: 2px solid var(--chakra-colors-secondary-default);
+  border: 2px solid;
+  border-color: var(--chakra-colors-secondary-default);
   color: var(--chakra-colors-text-inverted);
   padding: var(--chakra-space-sm) var(--chakra-space-xl);
   border-radius: var(--chakra-radii-lg);

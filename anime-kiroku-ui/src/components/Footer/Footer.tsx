@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <FooterWrapper>
       <VStack>
-        <Box as="img" src={logo} h="32px" />
+        <Box as="img" src={logo} h="32px" data-testid="footer-logo" />
         <Text fontSize="3xl" fontWeight="bold">
           AnimeKiroku
         </Text>
