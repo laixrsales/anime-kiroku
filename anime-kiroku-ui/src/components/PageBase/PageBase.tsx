@@ -15,10 +15,7 @@ const landingHeaderItems = [
   { label: 'Sign up', href: '/register' },
 ]
 
-const authenticatedHeaderItems = [
-  { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Your favorites', href: '/favorites' },
-]
+const authenticatedHeaderItems = [{ label: 'Dashboard', href: '/dashboard' }]
 
 const DefaultLoadingSpinner = () => (
   <LoadingOverlay data-testid="loading-overlay">
