@@ -16,7 +16,6 @@ import {
   ContentSection,
   SectionHeader,
   SectionTitle,
-  ViewAllButton,
   CTASection,
   CTATitle,
   CTADescription,
@@ -48,18 +47,14 @@ export default function LandingPage() {
   }, [])
 
   const convertAnimeToCardProps = (anime: Anime) => ({
-    id: anime.jikanId,
     image: anime.imageUrl,
     imageAlt: anime.title,
     title: anime.title,
     episodes: anime.episodes,
-    description: anime.synopsis
-      ? anime.synopsis.length > 100
-        ? `${anime.synopsis.substring(0, 100)}...`
-        : anime.synopsis
-      : 'No description available',
+    description: anime.synopsis ? anime.synopsis : 'No description available',
     score: anime.score,
     size: 'md' as const,
+    showOverlay: true,
   })
 
   const topAnimeCards = animes.map(convertAnimeToCardProps)
@@ -81,9 +76,6 @@ export default function LandingPage() {
       <ContentSection>
         <SectionHeader>
           <SectionTitle>Top Rated Animes</SectionTitle>
-          <Link to={ROUTES.ANIME_LIST}>
-            <ViewAllButton size="sm">View All</ViewAllButton>
-          </Link>
         </SectionHeader>
 
         {isLoading && animes.length === 0 ? (

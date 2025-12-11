@@ -40,24 +40,6 @@ export const SectionTitle = styled(Text)`
   }
 `
 
-export const ViewAllButton = styled(Button)`
-  background: transparent;
-  color: var(--chakra-colors-neutral-light);
-  border: 1px solid var(--chakra-colors-neutral-light);
-  font-weight: var(--chakra-fontWeights-medium);
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: var(--chakra-colors-neutral-light);
-    color: var(--chakra-colors-background-dark);
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-`
-
 export const CTASection = styled.section`
   text-align: center;
   padding: var(--chakra-space-3xl) var(--chakra-space-lg);
