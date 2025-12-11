@@ -1,13 +1,9 @@
-import React from 'react'
 import { Box, Text, Image } from '@chakra-ui/react'
-import { FaPlus, FaEdit } from 'react-icons/fa'
 import {
   CardContainer,
   Overlay,
   OverlayContent,
   OverlayTitle,
-  ActionsContainer,
-  ActionButton,
   TitleBelow,
   EpisodeCount,
   CardImageContainer,
@@ -15,7 +11,6 @@ import {
 import type { AnimeCardProps } from './AnimeCard.types'
 
 export default function AnimeCard({
-  id,
   image,
   imageAlt = 'Anime cover',
   title,
@@ -23,29 +18,13 @@ export default function AnimeCard({
   description,
   showTitleBelow = false,
   size = 'md',
-  onAdd,
-  onReview,
   className,
+  showOverlay,
+  onClick,
 }: AnimeCardProps) {
   const handleCardClick = () => {
-    console.log(`Navigate to anime details: ${id}`)
+    if (onClick) return onClick()
   }
-
-  const handleAddClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    onAdd?.(id)
-  }
-
-  const handleReviewClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    onReview?.(id)
-  }
-
-  const truncatedDescription = description
-    ? description.length > 100
-      ? `${description.substring(0, 100)}...`
-      : description
-    : ''
 
   return (
     <Box className={className} position="relative">
@@ -53,6 +32,7 @@ export default function AnimeCard({
         size={size}
         onClick={handleCardClick}
         data-testid="anime-card"
+        showOverlay={showOverlay}
       >
         <CardImageContainer>
           <Image
@@ -69,64 +49,45 @@ export default function AnimeCard({
         </CardImageContainer>
 
         {episodes !== undefined && episodes > 0 && (
-          <EpisodeCount className="episode-badge" data-testid="episode-count">
+          <EpisodeCount
+            className="episode-badge"
+            data-testid="episode-count"
+            showOverlay={showOverlay}
+          >
             <Text fontSize="xs" fontWeight="medium">
               {episodes} EP
             </Text>
           </EpisodeCount>
         )}
-
-        <Overlay
-          className="anime-card-overlay"
-          data-testid="anime-card-overlay"
-        >
-          <OverlayContent>
-            {title && (
-              <OverlayTitle data-testid="anime-card-title">
-                {title}
-              </OverlayTitle>
-            )}
-
-            {truncatedDescription && (
-              <Text
-                fontSize="12px"
-                fontWeight="300"
-                color="rgba(255, 255, 255, 0.7)"
-                lineHeight="1.4"
-                mt={2}
-                mb={2}
-                noOfLines={4}
-                data-testid="anime-card-description"
-              >
-                {truncatedDescription}
-              </Text>
-            )}
-          </OverlayContent>
-
-          {(onAdd || onReview) && (
-            <ActionsContainer data-testid="anime-card-actions">
-              {onAdd && (
-                <ActionButton
-                  icon={<FaPlus />}
-                  aria-label="Adicionar à lista"
-                  onClick={handleAddClick}
-                  data-testid="add-button"
-                  title="Adicionar à minha lista"
-                />
+        {showOverlay && (
+          <Overlay
+            className="anime-card-overlay"
+            data-testid="anime-card-overlay"
+          >
+            <OverlayContent>
+              {title && (
+                <OverlayTitle data-testid="anime-card-title">
+                  {title}
+                </OverlayTitle>
               )}
 
-              {onReview && (
-                <ActionButton
-                  icon={<FaEdit />}
-                  aria-label="Escrever review"
-                  onClick={handleReviewClick}
-                  data-testid="review-button"
-                  title="Escrever review"
-                />
+              {description && (
+                <Text
+                  fontSize="12px"
+                  fontWeight="300"
+                  color="rgba(255, 255, 255, 0.7)"
+                  lineHeight="1.4"
+                  mt={2}
+                  mb={2}
+                  noOfLines={4}
+                  data-testid="anime-card-description"
+                >
+                  {description}
+                </Text>
               )}
-            </ActionsContainer>
-          )}
-        </Overlay>
+            </OverlayContent>
+          </Overlay>
+        )}
       </CardContainer>
 
       {showTitleBelow && title && (

@@ -8,7 +8,10 @@ const sizeMap: Record<CardSize, { width: string; height: string }> = {
   lg: { width: '280px', height: '420px' },
 }
 
-export const CardContainer = styled(Box)<{ size?: CardSize }>`
+export const CardContainer = styled(Box)<{
+  size?: CardSize
+  showOverlay?: boolean
+}>`
   position: relative;
   width: ${({ size = 'md' }) => sizeMap[size].width};
   height: ${({ size = 'md' }) => sizeMap[size].height};
@@ -21,14 +24,24 @@ export const CardContainer = styled(Box)<{ size?: CardSize }>`
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 
-    .anime-card-overlay {
-      opacity: 1;
-      visibility: visible;
-    }
+    ${({ showOverlay = true }) =>
+      showOverlay
+        ? `
+      .anime-card-overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+    `
+        : ''}
 
     .episode-badge {
-      opacity: 0;
-      visibility: hidden;
+      ${({ showOverlay = true }) =>
+        showOverlay
+          ? `
+        opacity: 0;
+        visibility: hidden;
+      `
+          : ''}
     }
   }
 `
@@ -72,7 +85,7 @@ export const OverlayTitle = styled(Text)`
   letter-spacing: 0.2px;
 `
 
-export const EpisodeCount = styled(Box)`
+export const EpisodeCount = styled(Box)<{ showOverlay?: boolean }>`
   position: absolute;
   bottom: 8px;
   left: 8px;
@@ -93,6 +106,16 @@ export const EpisodeCount = styled(Box)`
     font-size: 11px;
     font-weight: 500;
   }
+
+  ${({ showOverlay = true }) =>
+    !showOverlay
+      ? `
+    &:hover {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+  `
+      : ''}
 `
 
 export const ActionsContainer = styled(Box)`
