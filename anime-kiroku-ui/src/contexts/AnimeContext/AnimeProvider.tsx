@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react'
 import {
+  getAnimeById,
+  getAnimeRecommendations,
   getTopAnimes,
   searchAnime,
   type Anime,
@@ -10,7 +12,11 @@ import { AnimeContext } from './AnimeContext'
 export function AnimeProvider({ children }: AnimeProviderProps) {
   const [animes, setAnimes] = useState<Anime[]>([])
   const [currentAnime, setCurrentAnime] = useState<Anime | null>(null)
+  const [recommendations, setRecommendations] = useState<Anime[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingAnime, setIsLoadingAnime] = useState(false)
+  const [isLoadingRecommendations, setIsLoadingRecommendations] =
+    useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleGetTopAnimes = useCallback(async () => {
@@ -49,11 +55,46 @@ export function AnimeProvider({ children }: AnimeProviderProps) {
     [handleGetTopAnimes],
   )
 
+  const handleGetAnimeById = useCallback(async (id: number) => {
+    setIsLoadingAnime(true)
+    setError(null)
+    try {
+      const data = await getAnimeById(id)
+      setCurrentAnime(data)
+      return data
+    } catch (err) {
+      setError('Erro ao buscar anime')
+      console.error('Erro no AnimeContext:', err)
+      throw err
+    } finally {
+      setIsLoadingAnime(false)
+    }
+  }, [])
+
+  const handleGetRecommendations = useCallback(async (animeId: number) => {
+    setIsLoadingRecommendations(true)
+    setError(null)
+    try {
+      const data = await getAnimeRecommendations(animeId)
+      setRecommendations(data)
+    } catch (err) {
+      setError('Erro ao buscar recomendações')
+      console.error('Erro ao buscar recomendações:', err)
+    } finally {
+      setIsLoadingRecommendations(false)
+    }
+  }, [])
+
+  const clearRecommendations = useCallback(() => {
+    setRecommendations([])
+  }, [])
+
   const clearAnimes = useCallback(() => {
     setAnimes([])
     setCurrentAnime(null)
     setError(null)
-  }, [])
+    clearRecommendations()
+  }, [clearRecommendations])
 
   const setCurrentAnimeCallback = useCallback((anime: Anime | null) => {
     setCurrentAnime(anime)
@@ -62,10 +103,16 @@ export function AnimeProvider({ children }: AnimeProviderProps) {
   const value: AnimeContextType = {
     animes,
     currentAnime,
+    recommendations,
     isLoading,
+    isLoadingAnime,
+    isLoadingRecommendations,
     error,
     searchAnime: handleSearchAnime,
     getTopAnimes: handleGetTopAnimes,
+    getAnimeById: handleGetAnimeById,
+    getRecommendations: handleGetRecommendations,
+    clearRecommendations: clearRecommendations,
     clearAnimes,
     setCurrentAnime: setCurrentAnimeCallback,
   }
