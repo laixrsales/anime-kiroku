@@ -1,4 +1,3 @@
-// src/theme/typography.ts
 export const fonts = {
   heading: `"Montserrat", sans-serif`,
   body: `"Montserrat", sans-serif`,
@@ -43,6 +42,7 @@ export const spacing = {
   lg: '1.5rem',
   xl: '2rem',
   '2xl': '3rem',
+  '3xl': '4rem',
 }
 
 export const radii = {
