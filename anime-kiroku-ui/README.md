@@ -1,75 +1,119 @@
-# React + TypeScript + Vite
+# Anime Kiroku UI — Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório contém o front-end do **Anime Kiroku**, um site inspirado no Letterboxd porém focado exclusivamente em **animes**, desenvolvido para a disciplina **INF321 – Projeto e Desenvolvimento de Sistemas Web** no curso de **Ciência da Computação** na **Universidade Federal de Viçosa**
 
-Currently, two official plugins are available:
+O projeto foi desenvolvido em parceria com **Henrique Resende** (responsável pelo back-end e API) e **Laís Sales** (responsável pela integração com o back-end, desenvolvimento do front-end e design das telas).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este repositório contempla apenas a parte do front-end, o repositório do back-end pode ser encontrado [aqui](https://github.com/HenryXV/kiroku).
 
-## React Compiler
+A aplicação foi construída com **React + TypeScript + Vite**, utilizando a biblioteca de UI **Chakra UI** para criação de componentes reutilizáveis e interface responsiva.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+---
 
-Note: This will impact Vite dev & build performances.
+## Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React** (TypeScript)
+- **Vite**
+- **Chakra UI** — https://chakra-ui.com
+- **Emotion**
+- **React Router DOM**
+- **Axios**
+- **Framer Motion**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Funcionalidades Implementadas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Tela de **Login**
+- Tela de **Registro**
+- **Landing Page**
+- **Dashboard**
+- **Página de Anime**
+- **Sistema de Reviews**:
+  - criação
+  - listagem
+  - visualização
+- Componentização completa
+- Integração com API externa
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Funcionalidades Não Concluídas
+
+- Sistema de **listas personalizadas**
+- Página e lógica de **episódios**
+- **Interação entre usuários**
+- Documentação técnica detalhada
+
+---
+
+## Scripts Disponíveis
+
+```bash
+npm run dev
+npm run build
+npm run preview
+npm run lint
+npm run test
+npm run test:ui
+
+---
+
+## Como Executar o Projeto
+
+1. **Clone o repositório**
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+git clone https://github.com/seu-usuario/anime-kiroku-ui.git
+cd anime-kiroku-ui
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Instale as dependências**
+
+```
+
+npm install
+
+```
+
+3. **Execute em ambiente de desenvolvimento**
+
+```
+
+npm run dev
+
+```
+
+O Vite iniciará o servidor local. Acesse:
+
+```
+
+http://localhost:5173
+
+```
+
+4. **Gerar build de produção**
+
+```
+
+npm run build
+
+```
+
+5. **Pré-visualizar a build**
+
+```
+
+npm run preview
+
+```
+
+---
+
+## Licença
+
+Este projeto foi desenvolvido exclusivamente para fins educacionais na disciplina **INF321 – Projeto e Desenvolvimento de Sistemas Web** e não possui uma licença formal de distribuição.
+Você está livre para consultar, estudar e se inspirar no código, mas não há garantia de manutenção nem de uso para fins comerciais.
 ```
