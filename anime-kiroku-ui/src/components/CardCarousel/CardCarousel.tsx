@@ -39,7 +39,7 @@ export const CardCarousel: React.FC<CardCarouselProps> = ({
 
       <CarouselContent>
         {visibleItems.map((anime) => (
-          <AnimeCard key={anime.id} {...anime} size="lg" />
+          <AnimeCard {...anime} size="lg" />
         ))}
       </CarouselContent>
 
