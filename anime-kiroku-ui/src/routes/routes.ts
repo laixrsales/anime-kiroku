@@ -2,15 +2,11 @@ export const ROUTES = {
   LANDING: '/',
   LOGIN: '/login',
   REGISTER: '/register',
-  RESET_PASSWORD: '/reset-password',
   SEARCH: '/search',
 
   DASHBOARD: '/dashboard',
-  FEED: '/feed',
-  ANIME_LIST: '/anime',
   ANIME_DETAIL: '/anime/:id',
-  MY_LISTS: '/my-lists',
-  PROFILE: '/profile',
+  ANIME_REVIEWS: '/anime/:id/reviews',
 
   NOT_FOUND: '*',
 } as const

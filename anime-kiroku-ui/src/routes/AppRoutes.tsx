@@ -9,22 +9,10 @@ const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))
 const CreateAccountPage = lazy(
   () => import('../pages/CreateAccountPage/CreateAccountPage'),
 )
-const ResetPasswordPage = lazy(
-  () => import('../pages/ResetPasswordPage/ResetPasswordPage'),
-)
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'))
 const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
-
-/*
 const DashboardPage = lazy(() => import('../pages/DashboardPage/DashboardPage'))
-const FeedPage = lazy(() => import('../pages/FeedPage/FeedPage'))
-const AnimeListPage = lazy(() => import('../pages/AnimeListPage/AnimeListPage'))
-const AnimeDetailPage = lazy(
-  () => import('../pages/AnimeDetailPage/AnimeDetailPage'),
-)
-const MyListsPage = lazy(() => import('../pages/MyListsPage/MyListsPage'))
-const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'))
-*/
+const AnimePage = lazy(() => import('../pages/AnimePage/AnimePage'))
 
 const LoadingFallback = () => (
   <PageBase isLoading={true}>
@@ -64,15 +52,10 @@ export default function AppRoutes() {
         />
 
         <Route
-          path={ROUTES.RESET_PASSWORD}
-          element={
-            <ProtectedRoute requireAuth={false}>
-              <ResetPasswordPage />
-            </ProtectedRoute>
-          }
+          path="/home"
+          element={<Navigate to={ROUTES.LANDING} replace />}
         />
 
-        {/*
         <Route
           path={ROUTES.DASHBOARD}
           element={
@@ -83,54 +66,12 @@ export default function AppRoutes() {
         />
 
         <Route
-          path={ROUTES.FEED}
-          element={
-            <ProtectedRoute requireAuth={true}>
-              <FeedPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path={ROUTES.ANIME_LIST}
-          element={
-            <ProtectedRoute requireAuth={true}>
-              <AnimeListPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path={ROUTES.ANIME_DETAIL}
           element={
             <ProtectedRoute requireAuth={true}>
-              <AnimeDetailPage />
+              <AnimePage />
             </ProtectedRoute>
           }
-        />
-
-        <Route
-          path={ROUTES.MY_LISTS}
-          element={
-            <ProtectedRoute requireAuth={true}>
-              <MyListsPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path={ROUTES.PROFILE}
-          element={
-            <ProtectedRoute requireAuth={true}>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        */}
-
-        <Route
-          path="/home"
-          element={<Navigate to={ROUTES.LANDING} replace />}
         />
         <Route path={ROUTES.SEARCH} element={<SearchPage />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
