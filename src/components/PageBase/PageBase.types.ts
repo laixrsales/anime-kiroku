@@ -1,4 +1,3 @@
-// PageBase.types.ts
 import type { ReactNode } from 'react'
 import type { HeaderItem } from '../Header'
 

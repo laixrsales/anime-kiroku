@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Text, IconButton } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const HeaderWrapper = styled.header`
   background-color: var(--chakra-colors-background-default);

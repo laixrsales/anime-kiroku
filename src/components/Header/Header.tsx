@@ -9,9 +9,8 @@ import {
   useToast,
 } from '@chakra-ui/react'
 
+import { useCallback } from 'react'
 import { FiChevronDown, FiSearch, FiLogOut } from 'react-icons/fi'
-import { type HeaderProps } from './Header.types'
-import logo from '../../assets/logo-lanternas.png'
 import {
   HeaderWrapper,
   LogoLink,
@@ -22,10 +21,11 @@ import {
   DropdownContent,
   ActionsArea,
 } from './Header.styles'
+import { type HeaderProps } from './Header.types'
+import logo from '../../assets/logo-lanternas.png'
+import { useAuth } from '../../hooks/useAuth'
 import { useNavigation } from '../../hooks/useNavigation'
 import { ROUTES } from '../../routes/routes'
-import { useAuth } from '../../hooks/useAuth'
-import { useCallback } from 'react'
 
 export default function Header({
   items,

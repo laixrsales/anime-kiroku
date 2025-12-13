@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
   Spinner,
   Alert,
@@ -7,11 +5,8 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
-import PageBase from '../../components/PageBase/PageBase'
-import Banner from '../../components/Banner/Banner'
-import { ROUTES } from '../../routes/routes'
-import animeBanner from '../../assets/anime-banner.png'
-import logo from '../../assets/logo-lanternas.png'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   HeroSection,
   ContentSection,
@@ -26,9 +21,14 @@ import {
   LoadingContainer,
   ErrorContainer,
 } from './LandingPage.styles'
-import type { Anime } from '../../services/animeService'
-import { useAnime } from '../../hooks/useAnime'
+import animeBanner from '../../assets/anime-banner.png'
+import logo from '../../assets/logo-lanternas.png'
 import { CardCarousel } from '../../components'
+import Banner from '../../components/Banner/Banner'
+import PageBase from '../../components/PageBase/PageBase'
+import { useAnime } from '../../hooks/useAnime'
+import { ROUTES } from '../../routes/routes'
+import type { Anime } from '../../services/animeService'
 
 export default function LandingPage() {
   const { animes, isLoading, error, getTopAnimes } = useAnime()

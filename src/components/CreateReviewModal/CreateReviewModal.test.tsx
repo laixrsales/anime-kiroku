@@ -1,8 +1,8 @@
-import React from 'react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { render, screen } from '@testing-library/react'
+import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import CreateReviewModal from './CreateReviewModal'
-import { ChakraProvider } from '@chakra-ui/react'
 
 const renderWithChakra = (component: React.ReactNode) => {
   return render(<ChakraProvider>{component}</ChakraProvider>)

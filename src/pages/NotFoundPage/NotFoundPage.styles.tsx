@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
 import { Box, Text, Button } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
 
 const float = keyframes`
   0%, 100% { transform: translateY(0px) rotate(0deg); }

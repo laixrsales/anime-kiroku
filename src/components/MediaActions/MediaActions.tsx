@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
 import { Tooltip } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { FaEye, FaHeart, FaStar } from 'react-icons/fa'
+import { FiShare2 } from 'react-icons/fi'
 import {
   MdOutlineRemoveRedEye,
   MdOutlineFavoriteBorder,
   MdOutlineStar,
 } from 'react-icons/md'
-import { FaEye, FaHeart, FaStar } from 'react-icons/fa'
 
 import {
   ActionsContainer,
@@ -19,7 +20,6 @@ import {
   StarButton,
 } from './MediaActions.styles'
 import type { MediaActionsProps } from './MediaActions.types'
-import { FiShare2 } from 'react-icons/fi'
 
 export default function MediaActions({
   reviewed = false,

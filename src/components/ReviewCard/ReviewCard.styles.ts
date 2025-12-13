@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const ReviewContainer = styled(Box)<{ cursor: string }>`
   width: 100%;

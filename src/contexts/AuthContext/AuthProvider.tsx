@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { AuthContext } from './AuthContext'
+import type { AuthProviderProps, RegisterResult } from './AuthContext.types'
 import {
   login as loginService,
   logout as logoutService,
@@ -10,8 +12,6 @@ import {
   type LoginResponse,
   type RegisterResponse,
 } from '../../services/authService'
-import type { AuthProviderProps, RegisterResult } from './AuthContext.types'
-import { AuthContext } from './AuthContext'
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)

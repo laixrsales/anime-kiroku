@@ -1,5 +1,5 @@
-import api from './api'
 import type { Anime } from './animeService'
+import api from './api'
 
 export interface Review {
   id: number

@@ -1,7 +1,7 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
+import { FaGithub } from 'react-icons/fa'
 import { FooterWrapper, IconLink } from './Footer.styles'
 import logo from '../../assets/logo-lanternas.png'
-import { FaGithub } from 'react-icons/fa'
 
 export default function Footer() {
   return (

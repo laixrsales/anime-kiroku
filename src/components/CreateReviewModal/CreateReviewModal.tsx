@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -9,7 +8,9 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
 
+import { FaStar, FaRegStar } from 'react-icons/fa'
 import {
   ModalContainer,
   Title,
@@ -24,7 +25,6 @@ import {
   RatingLabel,
 } from './CreateReviewModal.styles'
 
-import { FaStar, FaRegStar } from 'react-icons/fa'
 import type { CreateReviewModalProps } from './CreateReviewModal.types'
 
 export default function CreateReviewModal({

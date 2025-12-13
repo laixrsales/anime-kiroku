@@ -1,4 +1,3 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Box,
   Input,
@@ -15,12 +14,8 @@ import {
   Alert,
   AlertIcon,
 } from '@chakra-ui/react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { FiSearch, FiX, FiClock, FiTrendingUp } from 'react-icons/fi'
-import PageBase from '../../components/PageBase/PageBase'
-import AnimeCard from '../../components/AnimeCard/AnimeCard'
-import { searchAnime } from '../../services/animeService'
-import { type Anime } from '../../services/animeService'
-
 import {
   SearchContainer,
   AnimationContainer,
@@ -35,7 +30,11 @@ import {
   EmptyStateContainer,
   LoadingContainer,
 } from './SearchPage.styles'
+import AnimeCard from '../../components/AnimeCard/AnimeCard'
+import PageBase from '../../components/PageBase/PageBase'
 import { useNavigation } from '../../hooks/useNavigation'
+import { searchAnime } from '../../services/animeService'
+import { type Anime } from '../../services/animeService'
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('')

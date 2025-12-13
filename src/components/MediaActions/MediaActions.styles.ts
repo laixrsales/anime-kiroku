@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Box, Button, IconButton, Text, HStack, VStack } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const ActionsContainer = styled(VStack)`
   width: 100%;

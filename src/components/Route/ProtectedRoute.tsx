@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import PageBase from '../PageBase/PageBase'
 import { useAuth } from '../../hooks/useAuth'
+import PageBase from '../PageBase/PageBase'
 
 interface ProtectedRouteProps {
   children: React.ReactNode

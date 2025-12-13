@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Button, VStack } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const ModalContainer = styled(VStack)`
   background: var(--chakra-colors-background-dark);

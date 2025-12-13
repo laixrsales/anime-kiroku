@@ -1,11 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useAuth } from '../../hooks/useAuth'
-import { useAnime } from '../../hooks/useAnime'
-import { useReview } from '../../hooks/useReview'
-
-import PageBase from '../../components/PageBase/PageBase'
-import { CardCarousel, type AnimeCardProps } from '../../components'
-
 import {
   PageContainer,
   WelcomeTitle,
@@ -14,9 +7,13 @@ import {
   EmptyMessage,
   LoadingWrapper,
 } from './DashboardPage.styles'
-
-import type { Anime } from '../../services/animeService'
+import { CardCarousel, type AnimeCardProps } from '../../components'
+import PageBase from '../../components/PageBase/PageBase'
+import { useAnime } from '../../hooks/useAnime'
+import { useAuth } from '../../hooks/useAuth'
 import { useNavigation } from '../../hooks/useNavigation'
+import { useReview } from '../../hooks/useReview'
+import type { Anime } from '../../services/animeService'
 
 export default function DashboardPage() {
   const { user } = useAuth()

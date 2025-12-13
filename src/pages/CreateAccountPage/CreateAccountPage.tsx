@@ -1,4 +1,3 @@
-import { useState, useCallback } from 'react'
 import {
   FormControl,
   FormLabel,
@@ -9,6 +8,7 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react'
+import { useState, useCallback } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 import SimplePage from '../../components/SimplePage/SimplePage'

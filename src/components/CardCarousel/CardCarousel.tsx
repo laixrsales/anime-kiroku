@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
 import { IconButton } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { CarouselWrapper, CarouselContent } from './CardCarousel.styles'
-import AnimeCard from '../AnimeCard/AnimeCard'
 import type { CardCarouselProps } from './CardCarousel.types'
+import AnimeCard from '../AnimeCard/AnimeCard'
 
 export const CardCarousel: React.FC<CardCarouselProps> = ({
   cards,

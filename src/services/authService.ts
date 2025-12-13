@@ -1,5 +1,5 @@
-import api from './api'
 import { jwtDecode } from 'jwt-decode'
+import api from './api'
 import type { Review } from './reviewService'
 
 export interface DecodedToken {

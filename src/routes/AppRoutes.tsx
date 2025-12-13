@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import ProtectedRoute from '../components/Route/ProtectedRoute'
-import PageBase from '../components/PageBase/PageBase'
 import { ROUTES } from './routes'
+import PageBase from '../components/PageBase/PageBase'
+import ProtectedRoute from '../components/Route/ProtectedRoute'
 
 const LandingPage = lazy(() => import('../pages/LandingPage/LandingPage'))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))

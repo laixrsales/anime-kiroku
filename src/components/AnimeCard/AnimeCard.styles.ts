@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Box, Text, IconButton } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 import type { CardSize } from './AnimeCard.types'
 
 const sizeMap: Record<CardSize, { width: string; height: string }> = {

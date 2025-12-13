@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Box } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const BannerContainer = styled(Box)`
   position: relative;

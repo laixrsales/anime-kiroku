@@ -1,4 +1,5 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
+import { FiArrowLeft } from 'react-icons/fi'
 import { Link as RouterLink } from 'react-router-dom'
 
 import {
@@ -11,11 +12,10 @@ import {
 } from './SimplePage.styles'
 import type { SimplePageProps } from './SimplePage.types'
 
-import bgImage from '../../assets/anime-panel.jpg'
 import logo from '../../assets/anime-kiroku-logo.png'
-import { ROUTES } from '../../routes/routes'
-import { FiArrowLeft } from 'react-icons/fi'
+import bgImage from '../../assets/anime-panel.jpg'
 import { useNavigation } from '../../hooks/useNavigation'
+import { ROUTES } from '../../routes/routes'
 
 export default function SimplePage({
   title,

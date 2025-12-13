@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react'
+import { AnimeContext } from './AnimeContext'
+import type { AnimeProviderProps, AnimeContextType } from './AnimeContext.types'
 import {
   getAnimeById,
   getAnimeRecommendations,
@@ -6,8 +8,6 @@ import {
   searchAnime,
   type Anime,
 } from '../../services/animeService'
-import type { AnimeProviderProps, AnimeContextType } from './AnimeContext.types'
-import { AnimeContext } from './AnimeContext'
 
 export function AnimeProvider({ children }: AnimeProviderProps) {
   const [animes, setAnimes] = useState<Anime[]>([])

@@ -1,5 +1,4 @@
 import { Spinner } from '@chakra-ui/react'
-import ReviewCard from '../ReviewCard/ReviewCard'
 import {
   Container,
   Header,
@@ -10,6 +9,7 @@ import {
   LoadingContainer,
 } from './LatestReviews.styles'
 import type { LatestReviewsProps } from './LatestReviews.types'
+import ReviewCard from '../ReviewCard/ReviewCard'
 
 export default function LatestReviews({
   reviews,

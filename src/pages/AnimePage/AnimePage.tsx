@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
 import {
   Spinner,
   Alert,
@@ -11,17 +9,9 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react'
-import PageBase from '../../components/PageBase/PageBase'
-import { CardCarousel } from '../../components'
-import LatestReviews from '../../components/LatestReviews/LatestReviews'
-import MediaActions from '../../components/MediaActions/MediaActions'
-import { useAnime } from '../../hooks/useAnime'
-import { useReview } from '../../hooks/useReview'
-import { useAuth } from '../../hooks/useAuth'
-import { type Review } from '../../services/reviewService'
-import { type Anime } from '../../services/animeService'
-import CreateReviewModal from '../../components/CreateReviewModal/CreateReviewModal'
-
+import { useEffect, useState } from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
   PageContainer,
   GridLayout,
@@ -35,10 +25,18 @@ import {
   SectionTitle,
   LoadingWrapper,
 } from './AnimePage.styles'
-
-import { FiArrowLeft } from 'react-icons/fi'
-import { useNavigation } from '../../hooks/useNavigation'
+import { CardCarousel } from '../../components'
 import AnimeCard from '../../components/AnimeCard/AnimeCard'
+import CreateReviewModal from '../../components/CreateReviewModal/CreateReviewModal'
+import LatestReviews from '../../components/LatestReviews/LatestReviews'
+import MediaActions from '../../components/MediaActions/MediaActions'
+import PageBase from '../../components/PageBase/PageBase'
+import { useAnime } from '../../hooks/useAnime'
+import { useAuth } from '../../hooks/useAuth'
+import { useNavigation } from '../../hooks/useNavigation'
+import { useReview } from '../../hooks/useReview'
+import { type Anime } from '../../services/animeService'
+import { type Review } from '../../services/reviewService'
 
 const AnimePage = () => {
   const { id } = useParams<{ id: string }>()

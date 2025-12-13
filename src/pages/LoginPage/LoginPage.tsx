@@ -1,5 +1,3 @@
-import { useCallback, useState } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
 import {
   FormControl,
   FormLabel,
@@ -9,11 +7,13 @@ import {
   HStack,
   useToast,
 } from '@chakra-ui/react'
+import { useCallback, useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 import SimplePage from '../../components/SimplePage/SimplePage'
 import { StyledInput } from '../../components/SimplePage/SimplePage.styles'
-import { useNavigation } from '../../hooks/useNavigation'
 import { useAuth } from '../../hooks/useAuth'
+import { useNavigation } from '../../hooks/useNavigation'
 import { ROUTES } from '../../routes/routes'
 
 export default function LoginPage() {

@@ -1,7 +1,4 @@
 import { useContext } from 'react'
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
-import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 import {
   PageContainer,
   MainContent,
@@ -9,6 +6,9 @@ import {
   LoadingSpinner,
 } from './PageBase.styles'
 import type { PageBaseProps } from './PageBase.types'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 
 const landingHeaderItems = [
   { label: 'Sign in', href: '/login' },

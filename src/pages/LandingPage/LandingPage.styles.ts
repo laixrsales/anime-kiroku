@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { Box, Button, Text } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const HeroSection = styled.section`
   position: relative;

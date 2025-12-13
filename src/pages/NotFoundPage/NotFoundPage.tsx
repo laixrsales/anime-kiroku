@@ -1,9 +1,6 @@
-import { Link } from 'react-router-dom'
 import { Box, Text, Button, VStack, HStack } from '@chakra-ui/react'
 import { FiHome, FiArrowLeft } from 'react-icons/fi'
-import PageBase from '../../components/PageBase/PageBase'
-import { ROUTES } from '../../routes/routes'
-
+import { Link } from 'react-router-dom'
 import {
   NotFoundContainer,
   ErrorCode,
@@ -15,6 +12,8 @@ import {
   DotGrid,
   FloatingShape,
 } from './NotFoundPage.styles'
+import PageBase from '../../components/PageBase/PageBase'
+import { ROUTES } from '../../routes/routes'
 
 export default function NotFoundPage() {
   return (

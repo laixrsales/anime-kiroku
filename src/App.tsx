@@ -1,8 +1,8 @@
 import { BrowserRouter } from 'react-router-dom'
-import AppRoutes from './routes/AppRoutes'
-import { AuthProvider } from './contexts/AuthContext/AuthProvider'
 import { AnimeProvider } from './contexts/AnimeContext/AnimeProvider'
+import { AuthProvider } from './contexts/AuthContext/AuthProvider'
 import { ReviewProvider } from './contexts/ReviewContext/ReviewProvider'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (

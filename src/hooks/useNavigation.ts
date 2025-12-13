@@ -21,10 +21,6 @@ export function useNavigation() {
     navigate(ROUTES.REGISTER)
   }
 
-  const goToReset = () => {
-    navigate(ROUTES.RESET_PASSWORD)
-  }
-
   const goToDashboard = () => {
     navigate(ROUTES.DASHBOARD)
   }
@@ -43,7 +39,6 @@ export function useNavigation() {
     goBack,
     goToLogin,
     goToRegister,
-    goToReset,
     goToDashboard,
     goToLanding,
     getReturnUrl,
