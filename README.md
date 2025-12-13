@@ -68,7 +68,6 @@ npm run test:ui
 ```
 
 git clone https://github.com/seu-usuario/anime-kiroku-ui.git
-cd anime-kiroku-ui
 
 ```
 
